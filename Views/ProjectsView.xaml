@@ -1,0 +1,19 @@
+<UserControl x:Class="BloxHive.Views.ProjectsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:BloxHive.ViewModels"
+             d:DataContext="{d:DesignInstance vm:ProjectsViewModel}"
+             mc:Ignorable="d">
+    <ScrollViewer Padding="40">
+        <StackPanel>
+            <TextBlock Text="{Binding PageTitle}" Style="{StaticResource PageTitle}" />
+            <TextBlock Text="{Binding PageDescription}" Style="{StaticResource PageSubtitle}" />
+
+            <Border Style="{StaticResource Card}">
+                <TextBlock Text="Deine Projekte werden hier angezeigt." FontSize="14" Foreground="{DynamicResource BrushTextSecondary}" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

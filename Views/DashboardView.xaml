@@ -1,0 +1,73 @@
+<UserControl x:Class="BloxHive.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:BloxHive.ViewModels"
+             d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
+             mc:Ignorable="d">
+    <ScrollViewer Padding="32">
+        <StackPanel>
+            <TextBlock Text="{Binding WelcomeMessage}" Style="{StaticResource PageTitle}" />
+            <TextBlock Text="Übersicht über deine Accounts und Aktivitäten." Style="{StaticResource PageSubtitle}" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0 0 8 8">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatValue1}" Style="{StaticResource StatValue}" Foreground="{DynamicResource BrushAccent}" />
+                        <TextBlock Text="{Binding StatLabel1}" Style="{StaticResource StatLabel}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource Card}" Margin="8 0 8 8">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatValue2}" Style="{StaticResource StatValue}" Foreground="{DynamicResource BrushSuccess}" />
+                        <TextBlock Text="{Binding StatLabel2}" Style="{StaticResource StatLabel}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource Card}" Margin="8 0 8 8">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatValue3}" Style="{StaticResource StatValue}" Foreground="{DynamicResource BrushWarning}" />
+                        <TextBlock Text="{Binding StatLabel3}" Style="{StaticResource StatLabel}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Style="{StaticResource Card}" Margin="8 0 0 8">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatValue4}" Style="{StaticResource StatValue}" Foreground="{DynamicResource BrushAccentLight}" />
+                        <TextBlock Text="{Binding StatLabel4}" Style="{StaticResource StatLabel}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource Card}" Margin="0 8 0 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Letzte Aktivitäten" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <Border Grid.Row="1" Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="8" Padding="16" Margin="0 16 0 0">
+                        <TextBlock Text="Noch keine Aktivitäten. Füge deine ersten Accounts hinzu!" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" />
+                    </Border>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
