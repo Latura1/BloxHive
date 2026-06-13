@@ -33,6 +33,22 @@ public class Translation : INotifyPropertyChanged
         ["CloseAll"] = "Alle schließen",
         ["NoInstances"] = "Keine Roblox-Instanzen aktiv.",
         ["Refresh"] = "Aktualisieren",
+        ["Webhook"] = "Webhook",
+        ["WebhookDescription"] = "Richte einen Discord-Webhook für Screenshots ein.",
+        ["WebhookUrl"] = "Webhook-URL",
+        ["WebhookUrlPlaceholder"] = "https://discord.com/api/webhooks/...",
+        ["AutoWebhook"] = "Automatisch senden",
+        ["AutoWebhookDescription"] = "Sende Screenshots automatisch beim Erkennen neuer Instanzen.",
+        ["TestWebhook"] = "Test",
+        ["TestWebhookSent"] = "✅ Test-Webhook gesendet!",
+        ["TestWebhookFailed"] = "❌ Fehlgeschlagen – URL prüfen.",
+        ["WebhookNoUrl"] = "❌ Keine Webhook-URL hinterlegt.",
+        ["ScreenshotSent"] = "📸 Screenshot gesendet",
+        ["ScreenshotFailed"] = "❌ Screenshot fehlgeschlagen",
+        ["WebhookTestMessage"] = "✅ **BloxHive Test-Webhook** – Verbindung erfolgreich!",
+        ["WebhookScreenshotMessage"] = "📸 **BloxHive Screenshot** – {0} (PID: {1})",
+        ["WebhookInterval"] = "Intervall (Sekunden)",
+        ["WebhookIntervalDescription"] = "Wie oft sollen Screenshots automatisch gesendet werden?",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -63,6 +79,22 @@ public class Translation : INotifyPropertyChanged
         ["CloseAll"] = "Close All",
         ["NoInstances"] = "No Roblox instances running.",
         ["Refresh"] = "Refresh",
+        ["Webhook"] = "Webhook",
+        ["WebhookDescription"] = "Configure a Discord webhook for screenshots.",
+        ["WebhookUrl"] = "Webhook URL",
+        ["WebhookUrlPlaceholder"] = "https://discord.com/api/webhooks/...",
+        ["AutoWebhook"] = "Auto-send",
+        ["AutoWebhookDescription"] = "Automatically send screenshots when new instances are detected.",
+        ["TestWebhook"] = "Test",
+        ["TestWebhookSent"] = "✅ Test webhook sent!",
+        ["TestWebhookFailed"] = "❌ Failed – check URL.",
+        ["WebhookNoUrl"] = "❌ No webhook URL configured.",
+        ["ScreenshotSent"] = "📸 Screenshot sent",
+        ["ScreenshotFailed"] = "❌ Screenshot failed",
+        ["WebhookTestMessage"] = "✅ **BloxHive Test-Webhook** – Connection successful!",
+        ["WebhookScreenshotMessage"] = "📸 **BloxHive Screenshot** – {0} (PID: {1})",
+        ["WebhookInterval"] = "Interval (seconds)",
+        ["WebhookIntervalDescription"] = "How often should screenshots be sent automatically?",
     };
 
     private static Translation? _instance;
@@ -124,6 +156,22 @@ public class Translation : INotifyPropertyChanged
     public string CloseAll => Get("CloseAll");
     public string NoInstances => Get("NoInstances");
     public string Refresh => Get("Refresh");
+    public string Webhook => Get("Webhook");
+    public string WebhookDescription => Get("WebhookDescription");
+    public string WebhookUrl => Get("WebhookUrl");
+    public string WebhookUrlPlaceholder => Get("WebhookUrlPlaceholder");
+    public string AutoWebhook => Get("AutoWebhook");
+    public string AutoWebhookDescription => Get("AutoWebhookDescription");
+    public string TestWebhook => Get("TestWebhook");
+    public string TestWebhookSent => Get("TestWebhookSent");
+    public string TestWebhookFailed => Get("TestWebhookFailed");
+    public string WebhookNoUrl => Get("WebhookNoUrl");
+    public string ScreenshotSent => Get("ScreenshotSent");
+    public string ScreenshotFailed => Get("ScreenshotFailed");
+    public string WebhookTestMessage => Get("WebhookTestMessage");
+    public string WebhookScreenshotMessage => Get("WebhookScreenshotMessage");
+    public string WebhookInterval => Get("WebhookInterval");
+    public string WebhookIntervalDescription => Get("WebhookIntervalDescription");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

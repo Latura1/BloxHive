@@ -7,7 +7,7 @@
              d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
              mc:Ignorable="d">
     <ScrollViewer Padding="40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel>
+        <StackPanel MaxWidth="640">
             <TextBlock Text="{Binding Loc.SettingsTitle}" Style="{StaticResource PageTitle}" />
             <TextBlock Text="{Binding Loc.SettingsDescription}" Style="{StaticResource PageSubtitle}" />
 
@@ -33,6 +33,50 @@
                         <TextBlock Text="Ocean" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="80" TextAlignment="Center" Margin="24 0 0 0" />
                         <TextBlock Text="Nebula" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="80" TextAlignment="Center" Margin="24 0 0 0" />
                     </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Loc.Webhook}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.WebhookDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
+
+                    <TextBlock Text="{Binding Loc.WebhookUrl}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 0 0 6" />
+                    <TextBox Style="{StaticResource SettingsInput}" Text="{Binding WebhookUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="{Binding Loc.WebhookUrlPlaceholder}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 20" />
+
+                    <TextBlock Text="{Binding Loc.WebhookInterval}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 0 0 6" />
+                    <TextBox Style="{StaticResource SettingsInput}" Text="{Binding IntervalText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Loc.WebhookIntervalDescription}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 20" />
+
+                    <Button Height="36" Padding="16 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand" Command="{Binding TestWebhookCommand}" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0 0 8 0" />
+                            <TextBlock Text="{Binding Loc.TestWebhook}" FontSize="13" FontWeight="SemiBold" />
+                        </StackPanel>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{DynamicResource BrushAccent}" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="8" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <TextBlock Text="{Binding WebhookStatus}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 8 0 0" Visibility="{Binding WebhookStatus, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
             </Border>
         </StackPanel>

@@ -7,6 +7,9 @@ namespace BloxHive.ViewModels;
 
 public class SettingsViewModel : BaseViewModel
 {
+    private string _webhookStatus = "";
+    private bool _isTesting;
+
     public ObservableCollection<string> Languages { get; } = ["Deutsch", "English"];
 
     public int SelectedLanguageIndex
@@ -32,7 +35,47 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    public string WebhookUrl
+    {
+        get => SettingsService.Load().WebhookUrl;
+        set
+        {
+            var settings = SettingsService.Load();
+            settings.WebhookUrl = value ?? "";
+            SettingsService.Save(settings);
+            OnPropertyChanged();
+        }
+    }
+
+    public string IntervalText
+    {
+        get => SettingsService.Load().AutoWebhookInterval.ToString();
+        set
+        {
+            if (int.TryParse(value, out var num) && num >= 1 && num <= 3600)
+            {
+                var settings = SettingsService.Load();
+                settings.AutoWebhookInterval = num;
+                SettingsService.Save(settings);
+            }
+            OnPropertyChanged();
+        }
+    }
+
+    public string WebhookStatus
+    {
+        get => _webhookStatus;
+        set => SetProperty(ref _webhookStatus, value);
+    }
+
+    public bool IsTesting
+    {
+        get => _isTesting;
+        set => SetProperty(ref _isTesting, value);
+    }
+
     public ICommand SetThemeCommand { get; }
+    public ICommand TestWebhookCommand { get; }
 
     public SettingsViewModel()
     {
@@ -47,14 +90,31 @@ public class SettingsViewModel : BaseViewModel
                 Save();
             }
         });
+
+        TestWebhookCommand = new RelayCommand(async _ =>
+        {
+            var settings = SettingsService.Load();
+            if (string.IsNullOrWhiteSpace(settings.WebhookUrl))
+            {
+                WebhookStatus = Loc.WebhookNoUrl;
+                return;
+            }
+
+            IsTesting = true;
+            WebhookStatus = "";
+
+            var service = new WebhookService();
+            var success = await service.SendTest(settings.WebhookUrl);
+            WebhookStatus = success ? Loc.TestWebhookSent : Loc.TestWebhookFailed;
+            IsTesting = false;
+        });
     }
 
     private void Save()
     {
-        SettingsService.Save(new AppSettings
-        {
-            Language = Loc.IsEnglish ? "en" : "de",
-            Theme = ThemeManager.Instance.Current.Name,
-        });
+        var settings = SettingsService.Load();
+        settings.Language = Loc.IsEnglish ? "en" : "de";
+        settings.Theme = ThemeManager.Instance.Current.Name;
+        SettingsService.Save(settings);
     }
 }

@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+            <conv:StringToVisibilityConverter x:Key="StringToVisibility" />
 
             <DataTemplate DataType="{x:Type vm:HomeViewModel}">
                 <views:HomeView />

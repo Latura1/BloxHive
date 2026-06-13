@@ -44,9 +44,13 @@
 
             <Border Style="{StaticResource Card}">
                 <StackPanel>
-                    <Grid Margin="0 0 0 20">
+                    <Grid Margin="0 0 0 16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="8" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
@@ -54,7 +58,20 @@
                             <TextBlock Text="{Binding ProcessCountText}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                         </StackPanel>
 
-                        <Button Grid.Column="1" Style="{StaticResource DangerButton}" Command="{Binding KillAllCommand}" Visibility="{Binding HasProcesses, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="&#xE72D;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" VerticalAlignment="Center" Margin="0 0 6 0" />
+                            <TextBlock Text="Loop" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" VerticalAlignment="Center" Margin="0 0 8 0" />
+                            <ToggleButton Style="{StaticResource ToggleSwitch}" IsChecked="{Binding AutoLoopActive, Mode=TwoWay}" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <Button Grid.Column="3" Style="{StaticResource DangerButton}" Command="{Binding TestWebhookCommand}" Visibility="{Binding HasProcesses, Converter={StaticResource BoolToVisibility}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="11" Margin="0 0 6 0" />
+                                <TextBlock Text="{Binding Loc.TestWebhook}" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Grid.Column="5" Style="{StaticResource DangerButton}" Command="{Binding KillAllCommand}" Visibility="{Binding HasProcesses, Converter={StaticResource BoolToVisibility}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="11" Margin="0 0 6 0" />
                                 <TextBlock Text="{Binding Loc.CloseAll}" />
@@ -65,19 +82,69 @@
                     <ItemsControl ItemsSource="{Binding Processes}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="14 10" Margin="0 0 0 8">
+                                <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="10 8" Margin="0 0 0 6">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="6" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <ToggleButton Grid.Column="0" IsChecked="{Binding IsWebhookEnabled}" Width="20" Height="20" Cursor="Hand" VerticalAlignment="Center">
+                                            <ToggleButton.Style>
+                                                <Style TargetType="ToggleButton">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ToggleButton">
+                                                                <Border x:Name="box" Width="20" Height="20" CornerRadius="4" BorderThickness="2" BorderBrush="{DynamicResource BrushTextMuted}" Background="Transparent">
+                                                                    <TextBlock x:Name="check" Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                        <Setter TargetName="box" Property="Background" Value="{DynamicResource BrushAccent}" />
+                                                                        <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource BrushAccent}" />
+                                                                        <Setter TargetName="check" Property="Visibility" Value="Visible" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ToggleButton.Style>
+                                        </ToggleButton>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
                                             <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                                             <TextBlock Text="{Binding Id, StringFormat='PID: {0}'}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
                                         </StackPanel>
 
-                                        <Button Grid.Column="1" Style="{StaticResource SmallCloseButton}" Command="{Binding DataContext.KillProcessCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" VerticalAlignment="Center">
+                                        <Button Grid.Column="2" Width="28" Height="28" Background="Transparent" Foreground="{DynamicResource BrushTextSecondary}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorder}" Cursor="Hand"
+                                                Command="{Binding DataContext.TestInstanceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="0">
+                                                                    <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource BrushAccent}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource BrushAccent}" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+
+                                        <Button Grid.Column="4" Style="{StaticResource SmallCloseButton}"
+                                                Command="{Binding DataContext.KillProcessCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" VerticalAlignment="Center">
                                             <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
                                         </Button>
                                     </Grid>
@@ -89,6 +156,8 @@
                     <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="20" Visibility="{Binding HasNoProcesses, Converter={StaticResource BoolToVisibility}}">
                         <TextBlock Text="{Binding Loc.NoInstances}" FontSize="13" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" />
                     </Border>
+
+                    <TextBlock Text="{Binding WebhookStatus}" FontSize="12" Foreground="{DynamicResource BrushAccent}" Margin="0 8 0 0" Visibility="{Binding HasWebhookStatus, Converter={StaticResource BoolToVisibility}}" />
                 </StackPanel>
             </Border>
         </StackPanel>
