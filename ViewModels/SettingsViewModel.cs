@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using BloxHive.Models;
 using BloxHive.Services;
 
 namespace BloxHive.ViewModels;
@@ -15,6 +16,7 @@ public class SettingsViewModel : BaseViewModel
         {
             Loc.IsEnglish = value == 1;
             OnPropertyChanged();
+            Save();
         }
     }
 
@@ -26,6 +28,7 @@ public class SettingsViewModel : BaseViewModel
             if (value >= 0 && value < ThemeDefinition.All.Count)
                 ThemeManager.Instance.Current = ThemeDefinition.All[value];
             OnPropertyChanged();
+            Save();
         }
     }
 
@@ -39,7 +42,19 @@ public class SettingsViewModel : BaseViewModel
         SetThemeCommand = new RelayCommand(param =>
         {
             if (param is string s && int.TryParse(s, out var index) && index >= 0 && index < ThemeDefinition.All.Count)
+            {
                 ThemeManager.Instance.Current = ThemeDefinition.All[index];
+                Save();
+            }
+        });
+    }
+
+    private void Save()
+    {
+        SettingsService.Save(new AppSettings
+        {
+            Language = Loc.IsEnglish ? "en" : "de",
+            Theme = ThemeManager.Instance.Current.Name,
         });
     }
 }

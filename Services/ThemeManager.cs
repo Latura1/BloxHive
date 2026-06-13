@@ -32,6 +32,13 @@ public class ThemeManager : INotifyPropertyChanged
         Apply(_current);
     }
 
+    public void ApplyTheme(ThemeDefinition theme)
+    {
+        _current = theme;
+        if (_initialized)
+            Apply(theme);
+    }
+
     private void Apply(ThemeDefinition theme)
     {
         var app = Application.Current;
