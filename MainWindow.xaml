@@ -22,77 +22,81 @@
                             NonClientFrameEdges="None" />
     </shell:WindowChrome.WindowChrome>
 
-    <Grid Background="{DynamicResource BrushSurfaceDark}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Border CornerRadius="16" Background="{DynamicResource BrushSurfaceDark}" Margin="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <!-- Custom Title Bar -->
-        <Grid Grid.Row="0" Background="{DynamicResource BrushSurfaceDark}" MouseLeftButtonDown="TitleBar_MouseDown">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="12 0 0 0" VerticalAlignment="Center">
-                <Border Width="18" Height="18" CornerRadius="5" Background="{DynamicResource BrushAccent}">
-                    <TextBlock Text="B" FontSize="10" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Border>
-                <TextBlock Text="BloxHive" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="8 0 0 0" VerticalAlignment="Center" />
-            </StackPanel>
-
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Style="{StaticResource TitleBarButton}" Click="MinimizeClick">
-                    <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
-                </Button>
-                <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButton}" Click="MaximizeClick">
-                    <TextBlock x:Name="MaximizeIcon" Text="&#xE922;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
-                </Button>
-                <Button Style="{StaticResource CloseButton}" Click="CloseClick">
-                    <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
-                </Button>
-            </StackPanel>
-        </Grid>
-
-        <!-- Body -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!-- Sidebar -->
-            <Border Grid.Column="0" Background="{DynamicResource BrushSurfaceDarkSecondary}">
+            <!-- Custom Title Bar -->
+            <Border Grid.Row="0" Background="{DynamicResource BrushSurfaceDark}" CornerRadius="16 16 0 0" MouseLeftButtonDown="TitleBar_MouseDown">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="0" Margin="0 16 0 0">
-                        <TextBlock Text="{Binding Loc.Navigation}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource BrushTextMuted}" Margin="20 0 0 8" />
-                        <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToHomeCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE10F;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
-                                <TextBlock Text="{Binding Loc.Home}" Margin="8 0 0 0" VerticalAlignment="Center" />
-                            </StackPanel>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="16 0 0 0" VerticalAlignment="Center">
+                        <Border Width="20" Height="20" CornerRadius="6" Background="{DynamicResource BrushAccent}">
+                            <TextBlock Text="B" FontSize="11" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="BloxHive" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0 2 0 0">
+                        <Button Style="{StaticResource TitleBarButton}" Click="MinimizeClick">
+                            <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
                         </Button>
-                        <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToSettingsCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
-                                <TextBlock Text="{Binding Loc.Settings}" Margin="8 0 0 0" VerticalAlignment="Center" />
-                            </StackPanel>
+                        <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButton}" Click="MaximizeClick">
+                            <TextBlock x:Name="MaximizeIcon" Text="&#xE922;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                        </Button>
+                        <Button Style="{StaticResource CloseButton}" Click="CloseClick">
+                            <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
                         </Button>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
-            <Border Grid.Column="1" Background="{DynamicResource BrushBackground}">
-                <ContentControl Content="{Binding CurrentView}" Margin="0 0 0 0" />
-            </Border>
+            <!-- Body -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Sidebar -->
+                <Border Grid.Column="0" Background="{DynamicResource BrushSurfaceDarkSecondary}" CornerRadius="0 0 0 16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Margin="0 16 0 0">
+                            <TextBlock Text="{Binding Loc.Navigation}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource BrushTextMuted}" Margin="16 0 0 12" />
+                            <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToHomeCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE10F;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
+                                    <TextBlock Text="{Binding Loc.Home}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToSettingsCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
+                                    <TextBlock Text="{Binding Loc.Settings}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Main Content -->
+                <Border Grid.Column="1" Background="{DynamicResource BrushBackground}" CornerRadius="0 0 16 0">
+                    <ContentControl Content="{Binding CurrentView}" />
+                </Border>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

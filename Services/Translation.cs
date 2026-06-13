@@ -15,7 +15,7 @@ public class Translation : INotifyPropertyChanged
         ["English"] = "Englisch",
         ["HomeWelcome"] = "Willkommen bei BloxHive",
         ["HomeHint"] = "Wähle links im Menü, was du tun möchtest.",
-        ["Home"] = "Start",
+        ["Home"] = "Haupt",
         ["Settings"] = "Einstellungen",
         ["Navigation"] = "NAVIGATION",
         ["Theme"] = "Design",
@@ -23,6 +23,16 @@ public class Translation : INotifyPropertyChanged
         ["ThemeDefault"] = "Midnight",
         ["ThemeBlue"] = "Ocean",
         ["ThemePurple"] = "Nebula",
+        ["MultiInstance"] = "Multi-Instance",
+        ["MultiInstanceDescription"] = "Ermöglicht das gleichzeitige Öffnen mehrerer Roblox-Instanzen.",
+        ["MultiInstanceToggle"] = "Multi-RBLX aktivieren",
+        ["MultiInstanceActive"] = "Aktiv – Mehrere Instanzen möglich",
+        ["MultiInstanceInactive"] = "Inaktiv",
+        ["RunningInstances"] = "Laufende Instanzen",
+        ["RunningInstancesCount"] = "Laufende Instanzen ({0})",
+        ["CloseAll"] = "Alle schließen",
+        ["NoInstances"] = "Keine Roblox-Instanzen aktiv.",
+        ["Refresh"] = "Aktualisieren",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -35,7 +45,7 @@ public class Translation : INotifyPropertyChanged
         ["English"] = "English",
         ["HomeWelcome"] = "Welcome to BloxHive",
         ["HomeHint"] = "Select what you want to do from the menu on the left.",
-        ["Home"] = "Home",
+        ["Home"] = "Main",
         ["Settings"] = "Settings",
         ["Navigation"] = "NAVIGATION",
         ["Theme"] = "Theme",
@@ -43,6 +53,16 @@ public class Translation : INotifyPropertyChanged
         ["ThemeDefault"] = "Midnight",
         ["ThemeBlue"] = "Ocean",
         ["ThemePurple"] = "Nebula",
+        ["MultiInstance"] = "Multi-Instance",
+        ["MultiInstanceDescription"] = "Allows opening multiple Roblox instances simultaneously.",
+        ["MultiInstanceToggle"] = "Activate Multi-RBLX",
+        ["MultiInstanceActive"] = "Active – Multiple instances possible",
+        ["MultiInstanceInactive"] = "Inactive",
+        ["RunningInstances"] = "Running Instances",
+        ["RunningInstancesCount"] = "Running Instances ({0})",
+        ["CloseAll"] = "Close All",
+        ["NoInstances"] = "No Roblox instances running.",
+        ["Refresh"] = "Refresh",
     };
 
     private static Translation? _instance;
@@ -94,6 +114,16 @@ public class Translation : INotifyPropertyChanged
     public string ThemeDefault => Get("ThemeDefault");
     public string ThemeBlue => Get("ThemeBlue");
     public string ThemePurple => Get("ThemePurple");
+    public string MultiInstance => Get("MultiInstance");
+    public string MultiInstanceDescription => Get("MultiInstanceDescription");
+    public string MultiInstanceToggle => Get("MultiInstanceToggle");
+    public string MultiInstanceActive => Get("MultiInstanceActive");
+    public string MultiInstanceInactive => Get("MultiInstanceInactive");
+    public string RunningInstances => Get("RunningInstances");
+    public string RunningInstancesCount => Get("RunningInstancesCount");
+    public string CloseAll => Get("CloseAll");
+    public string NoInstances => Get("NoInstances");
+    public string Refresh => Get("Refresh");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

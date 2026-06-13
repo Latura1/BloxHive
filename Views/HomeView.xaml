@@ -6,13 +6,91 @@
              xmlns:vm="clr-namespace:BloxHive.ViewModels"
              d:DataContext="{d:DesignInstance vm:HomeViewModel}"
              mc:Ignorable="d">
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Border Width="64" Height="64" CornerRadius="16" Background="{DynamicResource BrushAccent}" HorizontalAlignment="Center">
-                <TextBlock Text="B" FontSize="32" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <ScrollViewer Padding="40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 32">
+                <Border Width="48" Height="48" CornerRadius="14" Background="{DynamicResource BrushAccent}" VerticalAlignment="Center">
+                    <TextBlock Text="B" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel VerticalAlignment="Center" Margin="16 0 0 0">
+                    <TextBlock Text="{Binding Loc.HomeWelcome}" FontSize="22" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.HomeHint}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 0" />
+                </StackPanel>
+            </StackPanel>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <TextBlock Text="{Binding Loc.MultiInstance}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.MultiInstanceDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
+
+                    <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="12" Padding="20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Loc.MultiInstanceToggle}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                                <TextBlock Text="{Binding MultiInstanceStatus}" FontSize="12" Foreground="{DynamicResource BrushAccent}" Margin="0 4 0 0" />
+                            </StackPanel>
+
+                            <ToggleButton Grid.Column="2" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding IsMultiInstanceActive, Mode=TwoWay}" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
             </Border>
-            <TextBlock Text="{Binding Loc.HomeWelcome}" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" HorizontalAlignment="Center" Margin="0 20 0 0" />
-            <TextBlock Text="{Binding Loc.HomeHint}" FontSize="14" Foreground="{DynamicResource BrushTextSecondary}" HorizontalAlignment="Center" Margin="0 8 0 0" />
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid Margin="0 0 0 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding ProcessCountText}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                        </StackPanel>
+
+                        <Button Grid.Column="1" Style="{StaticResource DangerButton}" Command="{Binding KillAllCommand}" Visibility="{Binding HasProcesses, Converter={StaticResource BoolToVisibility}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="11" Margin="0 0 6 0" />
+                                <TextBlock Text="{Binding Loc.CloseAll}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding Processes}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="14 10" Margin="0 0 0 8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                                            <TextBlock Text="{Binding Id, StringFormat='PID: {0}'}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                                        </StackPanel>
+
+                                        <Button Grid.Column="1" Style="{StaticResource SmallCloseButton}" Command="{Binding DataContext.KillProcessCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="20" Visibility="{Binding HasNoProcesses, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Text="{Binding Loc.NoInstances}" FontSize="13" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" />
+                    </Border>
+                </StackPanel>
+            </Border>
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

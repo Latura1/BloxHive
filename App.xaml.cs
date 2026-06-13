@@ -18,5 +18,8 @@ public partial class App : Application
         ThemeManager.Instance.ApplyTheme(theme);
 
         ThemeManager.Instance.Initialize();
+
+        if (settings.MultiInstanceActive)
+            MutexService.Instance.Acquire();
     }
 }
