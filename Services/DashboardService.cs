@@ -221,6 +221,7 @@ public static partial class DashboardService
             loopActive = HomeViewModel.GetLoopActive(),
             multiInstanceActive = MutexService.Instance.IsActive,
             webhookUrl = !string.IsNullOrEmpty(settings.WebhookUrl),
+            url = NetworkUrl,
             language = lang,
             theme = new { accent, bgDark, bgCard, bgTertiary, textPrimary, textSecondary, textMuted }
         });
