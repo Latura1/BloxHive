@@ -61,6 +61,19 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    public bool ExperimentalFeatures
+    {
+        get => SettingsService.Load().ExperimentalFeatures;
+        set
+        {
+            var settings = SettingsService.Load();
+            if (settings.ExperimentalFeatures == value) return;
+            settings.ExperimentalFeatures = value;
+            SettingsService.Save(settings);
+            OnPropertyChanged();
+        }
+    }
+
     public string WebhookStatus
     {
         get => _webhookStatus;

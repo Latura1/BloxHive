@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using BloxHive.Models;
 using BloxHive.Services;
+using BloxHive.Views;
 
 namespace BloxHive.ViewModels;
 
@@ -14,6 +15,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
     private readonly DispatcherTimer _refreshTimer;
     private readonly DispatcherTimer _webhookTimer = new();
     private readonly EventHandler _webhookTickHandler;
+    private readonly DispatcherTimer _accountStatusTimer = new();
     private int _processCount;
     private string _webhookStatus = "";
     private static bool _staticLoopActive;
@@ -70,6 +72,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
     public bool HasWebhookStatus => !string.IsNullOrEmpty(WebhookStatus);
 
     public ObservableCollection<RobloxProcessInfo> Processes { get; } = [];
+    public ObservableCollection<AccountInfo> SavedAccounts { get; } = [];
 
     public int ProcessCount
     {
@@ -78,11 +81,13 @@ public class HomeViewModel : BaseViewModel, IDisposable
     }
 
     public string ProcessCountText => string.Format(Loc.RunningInstancesCount, ProcessCount);
+    public bool HasSavedAccounts => SavedAccounts.Count > 0;
 
     public ICommand KillProcessCommand { get; }
     public ICommand KillAllCommand { get; }
     public ICommand TestWebhookCommand { get; }
     public ICommand TestInstanceCommand { get; }
+    public ICommand OpenSavedAccountCommand { get; }
 
     public HomeViewModel()
     {
@@ -142,12 +147,41 @@ public class HomeViewModel : BaseViewModel, IDisposable
             }
         });
 
+        OpenSavedAccountCommand = new RelayCommand(param =>
+        {
+            if (param is AccountInfo account)
+            {
+                var window = new AccountWindow(account);
+                window.Show();
+            }
+        });
+
         _webhookTickHandler = async (_, _) => await RunWebhookLoop();
 
         _refreshTimer = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Background, (_, _) => _ = RefreshProcesses(), Dispatcher.CurrentDispatcher);
         _refreshTimer.Start();
 
+        _accountStatusTimer = new DispatcherTimer(TimeSpan.FromSeconds(30), DispatcherPriority.Background, async (_, _) => await RefreshAccountStatus(), Dispatcher.CurrentDispatcher);
+        _accountStatusTimer.Start();
+
         _ = RefreshProcesses();
+        LoadSavedAccounts();
+    }
+
+    private void LoadSavedAccounts()
+    {
+        SavedAccounts.Clear();
+        foreach (var account in AccountService.Load())
+            SavedAccounts.Add(account);
+        OnPropertyChanged(nameof(HasSavedAccounts));
+        _ = RefreshAccountStatus();
+    }
+
+    private async Task RefreshAccountStatus()
+    {
+        var accounts = SavedAccounts.ToList();
+        if (accounts.Count == 0) return;
+        await RobloxApiService.UpdatePresence(accounts);
     }
 
     private void StartWebhookLoop()
@@ -220,5 +254,6 @@ public class HomeViewModel : BaseViewModel, IDisposable
     {
         _refreshTimer.Stop();
         _webhookTimer.Stop();
+        _accountStatusTimer.Stop();
     }
 }

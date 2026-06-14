@@ -90,6 +90,22 @@
                     <TextBlock Text="{Binding WebhookStatus}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 8 0 0" Visibility="{Binding WebhookStatus, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
             </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Loc.Experimental}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                            <TextBlock Text="{Binding Loc.ExperimentalDescription}" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 0" />
+                        </StackPanel>
+                        <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding ExperimentalFeatures, Mode=TwoWay}" VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -7,4 +7,5 @@ public class AppSettings
     public bool MultiInstanceActive { get; set; }
     public string WebhookUrl { get; set; } = "";
     public int AutoWebhookInterval { get; set; } = 10;
+    public bool ExperimentalFeatures { get; set; }
 }

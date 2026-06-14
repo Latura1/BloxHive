@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using BloxHive.Models;
 using BloxHive.Services;
 using BloxHive.Views;
@@ -10,12 +11,15 @@ namespace BloxHive.ViewModels;
 public class AccountsViewModel : BaseViewModel
 {
     private string _statusMessage = "";
+    private readonly DispatcherTimer _statusTimer;
 
     public ObservableCollection<AccountInfo> Accounts { get; } = [];
     public int AccountCount => Accounts.Count;
     public string AccountCountText => string.Format(Loc.AccountsCount, AccountCount);
     public bool HasNoAccounts => AccountCount == 0;
     public bool HasStatusMessage => !string.IsNullOrEmpty(StatusMessage);
+
+    public bool IsExperimentalEnabled => SettingsService.Load().ExperimentalFeatures;
 
     public string StatusMessage
     {
@@ -30,6 +34,7 @@ public class AccountsViewModel : BaseViewModel
     public ICommand AddAccountCommand { get; }
     public ICommand OpenAccountCommand { get; }
     public ICommand DeleteAccountCommand { get; }
+    public ICommand SaveProxyCommand { get; }
     public ICommand ClearCacheCommand { get; }
 
     public AccountsViewModel()
@@ -45,13 +50,27 @@ public class AccountsViewModel : BaseViewModel
             if (param is AccountInfo account)
                 DeleteAccount(account);
         });
+        SaveProxyCommand = new RelayCommand(param =>
+        {
+            if (param is AccountInfo account)
+                SaveProxy(account);
+        });
         ClearCacheCommand = new RelayCommand(_ =>
         {
             AccountService.ClearWebView2Cache();
+            RobloxApiService.ClearCookieCache();
             StatusMessage = Loc.CacheCleared;
         });
 
         LoadAccounts();
+
+        SettingsService.Saved += () =>
+        {
+            OnPropertyChanged(nameof(IsExperimentalEnabled));
+        };
+
+        _statusTimer = new DispatcherTimer(TimeSpan.FromSeconds(30), DispatcherPriority.Background, async (_, _) => await RefreshStatus(), Dispatcher.CurrentDispatcher);
+        _statusTimer.Start();
     }
 
     private void LoadAccounts()
@@ -60,6 +79,14 @@ public class AccountsViewModel : BaseViewModel
         foreach (var account in AccountService.Load())
             Accounts.Add(account);
         RefreshCounts();
+        _ = RefreshStatus();
+    }
+
+    private async Task RefreshStatus()
+    {
+        var accounts = Accounts.ToList();
+        if (accounts.Count == 0) return;
+        await RobloxApiService.UpdatePresence(accounts);
     }
 
     private void RefreshCounts()
@@ -107,5 +134,11 @@ public class AccountsViewModel : BaseViewModel
             RefreshCounts();
             StatusMessage = string.Format(Loc.AccountDeleted, account.DisplayName);
         }
+    }
+
+    private void SaveProxy(AccountInfo account)
+    {
+        AccountService.Save([.. Accounts]);
+        StatusMessage = string.Format(Loc.ProxySaved, account.DisplayName);
     }
 }

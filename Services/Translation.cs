@@ -64,6 +64,13 @@ public class Translation : INotifyPropertyChanged
         ["AccountAdded"] = "✅ Account \"{0}\" hinzugefügt!",
         ["AccountDeleted"] = "🗑 Account \"{0}\" gelöscht.",
         ["AccountExists"] = "⚠ Account \"{0}\" existiert bereits.",
+        ["Proxy"] = "Proxy",
+        ["ProxyPlaceholder"] = "http://ip:port oder socks5://ip:port",
+        ["ProxySaved"] = "✅ Proxy für Account \"{0}\" gespeichert.",
+        ["QuickAccess"] = "Schnellzugriff",
+        ["QuickAccessDescription"] = "Gespeicherte Accounts – klicke zum Öffnen.",
+        ["Experimental"] = "⚙ Experimental",
+        ["ExperimentalDescription"] = "Experimentelle Funktionen aktivieren",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -125,6 +132,13 @@ public class Translation : INotifyPropertyChanged
         ["AccountAdded"] = "✅ Account \"{0}\" added!",
         ["AccountDeleted"] = "🗑 Account \"{0}\" deleted.",
         ["AccountExists"] = "⚠ Account \"{0}\" already exists.",
+        ["Proxy"] = "Proxy",
+        ["ProxyPlaceholder"] = "http://ip:port or socks5://ip:port",
+        ["ProxySaved"] = "✅ Proxy for account \"{0}\" saved.",
+        ["QuickAccess"] = "Quick Access",
+        ["QuickAccessDescription"] = "Saved accounts – click to open.",
+        ["Experimental"] = "⚙ Experimental",
+        ["ExperimentalDescription"] = "Enable experimental features",
     };
 
     private static Translation? _instance;
@@ -217,6 +231,13 @@ public class Translation : INotifyPropertyChanged
     public string AccountAdded => Get("AccountAdded");
     public string AccountDeleted => Get("AccountDeleted");
     public string AccountExists => Get("AccountExists");
+    public string Proxy => Get("Proxy");
+    public string ProxyPlaceholder => Get("ProxyPlaceholder");
+    public string ProxySaved => Get("ProxySaved");
+    public string QuickAccess => Get("QuickAccess");
+    public string QuickAccessDescription => Get("QuickAccessDescription");
+    public string Experimental => Get("Experimental");
+    public string ExperimentalDescription => Get("ExperimentalDescription");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

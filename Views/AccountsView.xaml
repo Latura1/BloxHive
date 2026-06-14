@@ -65,50 +65,90 @@
                             <DataTemplate>
                                 <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="14 12" Margin="0 0 0 8">
                                     <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="8" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                        <Border Grid.Column="0" Width="36" Height="36" CornerRadius="10" Background="{DynamicResource BrushAccent}" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="8" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0" VerticalAlignment="Center">
+                                                <Border Width="36" Height="36" CornerRadius="10" Background="{DynamicResource BrushSurfaceDarkSecondary}" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource BrushTextSecondary}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                                <Ellipse Width="10" Height="10" Fill="{Binding StatusDotColor}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 -2 -2" />
+                                            </Grid>
+
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12 0 0 0">
+                                                <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                                                <TextBlock Text="{Binding StatusText}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                                            </StackPanel>
+
+                                            <Button Grid.Column="2" Height="32" Padding="12 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                                    Command="{Binding DataContext.OpenAccountCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="&#xE8A7;" FontFamily="Segoe MDL2 Assets" FontSize="11" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                                    <TextBlock Text="{Binding DataContext.Loc.OpenAccount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="12" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+
+                                            <Button Grid.Column="4" Style="{StaticResource DangerButton}"
+                                                    Command="{Binding DataContext.DeleteAccountCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" VerticalAlignment="Center" Height="32">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                                    <TextBlock Text="{Binding DataContext.Loc.DeleteAccount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="12" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+
+                                        <Border Grid.Row="1" Background="{DynamicResource BrushSurfaceDark}" CornerRadius="6" Padding="10 8" Margin="0 8 0 0"
+                                                Visibility="{Binding DataContext.IsExperimentalEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Converter={StaticResource BoolToVisibility}}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding DataContext.Loc.Proxy, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" VerticalAlignment="Center" Margin="0 0 8 0" />
+                                                <TextBox Grid.Column="1" Text="{Binding Proxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Height="28" Padding="8 0" Foreground="{DynamicResource BrushTextPrimary}" Background="{DynamicResource BrushSurfaceDarkTertiary}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1" CaretBrush="{DynamicResource BrushAccent}" VerticalContentAlignment="Center" />
+                                                <Button Grid.Column="2" Height="28" Padding="10 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand" Margin="8 0 0 0"
+                                                        Command="{Binding DataContext.SaveProxyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}">
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                    <TextBlock Text="Save" FontSize="11" />
+                                                </Button>
+                                            </Grid>
                                         </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12 0 0 0">
-                                            <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
-                                            <TextBlock Text="{Binding UserId, StringFormat='ID: {0}'}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
-                                        </StackPanel>
-
-                                        <Button Grid.Column="2" Height="32" Padding="12 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
-                                                Command="{Binding DataContext.OpenAccountCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="border" Property="Opacity" Value="0.85" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="&#xE8A7;" FontFamily="Segoe MDL2 Assets" FontSize="11" VerticalAlignment="Center" Margin="0 0 6 0" />
-                                                <TextBlock Text="{Binding DataContext.Loc.OpenAccount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="12" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </Button>
-
-                                        <Button Grid.Column="4" Style="{StaticResource DangerButton}"
-                                                Command="{Binding DataContext.DeleteAccountCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" VerticalAlignment="Center" Height="32">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10" VerticalAlignment="Center" Margin="0 0 6 0" />
-                                                <TextBlock Text="{Binding DataContext.Loc.DeleteAccount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="12" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </Button>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

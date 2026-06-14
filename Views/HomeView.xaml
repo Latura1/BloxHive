@@ -42,7 +42,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}">
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
                 <StackPanel>
                     <Grid Margin="0 0 0 16">
                         <Grid.ColumnDefinitions>
@@ -151,6 +151,61 @@
                     </Border>
 
                     <TextBlock Text="{Binding WebhookStatus}" FontSize="12" Foreground="{DynamicResource BrushAccent}" Margin="0 8 0 0" Visibility="{Binding HasWebhookStatus, Converter={StaticResource BoolToVisibility}}" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Visibility="{Binding HasSavedAccounts, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Loc.QuickAccess}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.QuickAccessDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
+
+                    <ItemsControl ItemsSource="{Binding SavedAccounts}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="12 10" Margin="0 0 0 6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0" VerticalAlignment="Center">
+                                            <Border Width="36" Height="36" CornerRadius="10" Background="{DynamicResource BrushSurfaceDarkSecondary}" VerticalAlignment="Center">
+                                                <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource BrushTextSecondary}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <Ellipse Width="10" Height="10" Fill="{Binding StatusDotColor}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 -2 -2" />
+                                        </Grid>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12 0 0 0">
+                                            <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                                            <TextBlock Text="{Binding StatusText}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                                        </StackPanel>
+
+                                        <Button Grid.Column="2" Height="30" Padding="12 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                                Command="{Binding DataContext.OpenSavedAccountCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="&#xE8A7;" FontFamily="Segoe MDL2 Assets" FontSize="11" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                                <TextBlock Text="{Binding DataContext.Loc.OpenAccount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="12" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Border>
         </StackPanel>

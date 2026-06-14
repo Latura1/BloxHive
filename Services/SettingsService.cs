@@ -29,12 +29,15 @@ public static class SettingsService
         return new AppSettings();
     }
 
+    public static event Action? Saved;
+
     public static void Save(AppSettings settings)
     {
         try
         {
             var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_filePath, json);
+            Saved?.Invoke();
         }
         catch { }
     }

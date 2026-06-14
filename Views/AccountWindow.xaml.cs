@@ -22,7 +22,23 @@ public partial class AccountWindow : Window
     private async Task InitializeWebView()
     {
         var userDataFolder = AccountService.GetAccountUserDataFolder(_account.UserId);
-        var env = await CoreWebView2Environment.CreateAsync(userDataFolder: userDataFolder);
+
+        CoreWebView2EnvironmentOptions? options = null;
+        if (!string.IsNullOrWhiteSpace(_account.Proxy))
+        {
+            var proxy = _account.Proxy.Trim();
+            if (!proxy.StartsWith("http://") && !proxy.StartsWith("https://") && !proxy.StartsWith("socks5://"))
+                proxy = "http://" + proxy;
+            options = new CoreWebView2EnvironmentOptions
+            {
+                AdditionalBrowserArguments = $"--proxy-server={proxy}"
+            };
+        }
+
+        var env = options != null
+            ? await CoreWebView2Environment.CreateAsync(userDataFolder: userDataFolder, options: options)
+            : await CoreWebView2Environment.CreateAsync(userDataFolder: userDataFolder);
+
         await AccountWebView.EnsureCoreWebView2Async(env);
 
         AccountWebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
