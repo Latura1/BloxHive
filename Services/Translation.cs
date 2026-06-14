@@ -63,6 +63,7 @@ public class Translation : INotifyPropertyChanged
         ["AccountsCount"] = "{0} Account(s)",
         ["AccountAdded"] = "✅ Account \"{0}\" hinzugefügt!",
         ["AccountDeleted"] = "🗑 Account \"{0}\" gelöscht.",
+        ["AccountExists"] = "⚠ Account \"{0}\" existiert bereits.",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -123,6 +124,7 @@ public class Translation : INotifyPropertyChanged
         ["AccountsCount"] = "{0} account(s)",
         ["AccountAdded"] = "✅ Account \"{0}\" added!",
         ["AccountDeleted"] = "🗑 Account \"{0}\" deleted.",
+        ["AccountExists"] = "⚠ Account \"{0}\" already exists.",
     };
 
     private static Translation? _instance;
@@ -214,6 +216,7 @@ public class Translation : INotifyPropertyChanged
     public string AccountsCount => Get("AccountsCount");
     public string AccountAdded => Get("AccountAdded");
     public string AccountDeleted => Get("AccountDeleted");
+    public string AccountExists => Get("AccountExists");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

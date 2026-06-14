@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
@@ -14,19 +15,28 @@ public partial class AccountLoginWindow : Window
     private bool _cookieFound;
     private string? _authCookie;
     private bool _completed;
+    private readonly string _tempFolder;
 
     public AccountInfo? Result { get; private set; }
 
     public AccountLoginWindow()
     {
+        _tempFolder = Path.Combine(Path.GetTempPath(), "BloxHive", "Login", Guid.NewGuid().ToString());
         InitializeComponent();
         Owner = Application.Current.MainWindow;
         Loaded += OnLoaded;
+        Closed += (_, _) => CleanupTemp();
+    }
+
+    private void CleanupTemp()
+    {
+        try { if (Directory.Exists(_tempFolder)) Directory.Delete(_tempFolder, true); }
+        catch { }
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        var env = await CoreWebView2Environment.CreateAsync(userDataFolder: AccountService.GetWebView2UserDataFolder());
+        var env = await CoreWebView2Environment.CreateAsync(userDataFolder: _tempFolder);
         await LoginWebView.EnsureCoreWebView2Async(env);
 
         LoginWebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;

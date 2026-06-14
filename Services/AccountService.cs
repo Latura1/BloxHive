@@ -65,6 +65,13 @@ public static class AccountService
         return dir;
     }
 
+    public static string GetAccountUserDataFolder(long userId)
+    {
+        var dir = Path.Combine(_dir, "WebView2", "Accounts", userId.ToString());
+        Directory.CreateDirectory(dir);
+        return dir;
+    }
+
     public static void ClearWebView2Cache()
     {
         try

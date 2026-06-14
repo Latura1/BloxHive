@@ -5,6 +5,8 @@ namespace BloxHive.ViewModels;
 public class MainViewModel : BaseViewModel
 {
     private BaseViewModel? _currentView;
+    private readonly Dictionary<Type, BaseViewModel> _cachedViews = [];
+
     public BaseViewModel? CurrentView
     {
         get => _currentView;
@@ -21,11 +23,21 @@ public class MainViewModel : BaseViewModel
         NavigateToSettingsCommand = new RelayCommand(_ => NavigateTo<SettingsViewModel>());
         NavigateToAccountsCommand = new RelayCommand(_ => NavigateTo<AccountsViewModel>());
 
-        CurrentView = new HomeViewModel();
+        CurrentView = GetOrCreate<HomeViewModel>();
     }
 
     private void NavigateTo<T>() where T : BaseViewModel, new()
     {
-        CurrentView = new T();
+        CurrentView = GetOrCreate<T>();
+    }
+
+    private T GetOrCreate<T>() where T : BaseViewModel, new()
+    {
+        if (!_cachedViews.TryGetValue(typeof(T), out var view))
+        {
+            view = new T();
+            _cachedViews[typeof(T)] = view;
+        }
+        return (T)view;
     }
 }

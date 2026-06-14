@@ -74,6 +74,11 @@ public class AccountsViewModel : BaseViewModel
         var window = new AccountLoginWindow();
         if (window.ShowDialog() == true && window.Result != null)
         {
+            if (Accounts.Any(a => a.UserId == window.Result.UserId))
+            {
+                StatusMessage = string.Format(Loc.AccountExists, window.Result.DisplayName);
+                return;
+            }
             Accounts.Add(window.Result);
             AccountService.Save([.. Accounts]);
             RefreshCounts();

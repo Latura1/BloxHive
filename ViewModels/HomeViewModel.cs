@@ -13,6 +13,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
     private readonly WebhookService _webhookService = new();
     private readonly DispatcherTimer _refreshTimer;
     private readonly DispatcherTimer _webhookTimer = new();
+    private readonly EventHandler _webhookTickHandler;
     private int _processCount;
     private string _webhookStatus = "";
     private static bool _staticLoopActive;
@@ -141,6 +142,8 @@ public class HomeViewModel : BaseViewModel, IDisposable
             }
         });
 
+        _webhookTickHandler = async (_, _) => await RunWebhookLoop();
+
         _refreshTimer = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Background, (_, _) => _ = RefreshProcesses(), Dispatcher.CurrentDispatcher);
         _refreshTimer.Start();
 
@@ -151,14 +154,14 @@ public class HomeViewModel : BaseViewModel, IDisposable
     {
         var interval = SettingsService.Load().AutoWebhookInterval;
         _webhookTimer.Interval = TimeSpan.FromSeconds(Math.Max(1, interval));
-        _webhookTimer.Tick += async (_, _) => await RunWebhookLoop();
+        _webhookTimer.Tick += _webhookTickHandler;
         _webhookTimer.Start();
     }
 
     private void StopWebhookLoop()
     {
+        _webhookTimer.Tick -= _webhookTickHandler;
         _webhookTimer.Stop();
-        _webhookTimer.Tick -= async (_, _) => await RunWebhookLoop();
     }
 
     private async Task RunWebhookLoop()
