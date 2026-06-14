@@ -49,6 +49,20 @@ public class Translation : INotifyPropertyChanged
         ["WebhookScreenshotMessage"] = "📸 **BloxHive Screenshot** – {0} (PID: {1})",
         ["WebhookInterval"] = "Intervall (Sekunden)",
         ["WebhookIntervalDescription"] = "Wie oft sollen Screenshots automatisch gesendet werden?",
+        ["Accounts"] = "Accounts",
+        ["AccountsTitle"] = "Account-Verwaltung",
+        ["AccountsDescription"] = "Füge Roblox-Accounts hinzu und öffne sie im eingebauten Browser.",
+        ["AddAccount"] = "Hinzufügen",
+        ["OpenAccount"] = "Öffnen",
+        ["DeleteAccount"] = "Löschen",
+        ["DeleteAccountTitle"] = "Account löschen",
+        ["DeleteAccountConfirm"] = "Möchtest du den Account \"{0}\" wirklich löschen?",
+        ["ClearCache"] = "Cache leeren",
+        ["CacheCleared"] = "🧹 Cache wurde geleert.",
+        ["NoAccounts"] = "Noch keine Accounts hinterlegt.",
+        ["AccountsCount"] = "{0} Account(s)",
+        ["AccountAdded"] = "✅ Account \"{0}\" hinzugefügt!",
+        ["AccountDeleted"] = "🗑 Account \"{0}\" gelöscht.",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -95,6 +109,20 @@ public class Translation : INotifyPropertyChanged
         ["WebhookScreenshotMessage"] = "📸 **BloxHive Screenshot** – {0} (PID: {1})",
         ["WebhookInterval"] = "Interval (seconds)",
         ["WebhookIntervalDescription"] = "How often should screenshots be sent automatically?",
+        ["Accounts"] = "Accounts",
+        ["AccountsTitle"] = "Account Management",
+        ["AccountsDescription"] = "Add Roblox accounts and open them in the built-in browser.",
+        ["AddAccount"] = "Add",
+        ["OpenAccount"] = "Open",
+        ["DeleteAccount"] = "Delete",
+        ["DeleteAccountTitle"] = "Delete Account",
+        ["DeleteAccountConfirm"] = "Are you sure you want to delete account \"{0}\"?",
+        ["ClearCache"] = "Clear Cache",
+        ["CacheCleared"] = "🧹 Cache cleared.",
+        ["NoAccounts"] = "No accounts yet.",
+        ["AccountsCount"] = "{0} account(s)",
+        ["AccountAdded"] = "✅ Account \"{0}\" added!",
+        ["AccountDeleted"] = "🗑 Account \"{0}\" deleted.",
     };
 
     private static Translation? _instance;
@@ -172,6 +200,20 @@ public class Translation : INotifyPropertyChanged
     public string WebhookScreenshotMessage => Get("WebhookScreenshotMessage");
     public string WebhookInterval => Get("WebhookInterval");
     public string WebhookIntervalDescription => Get("WebhookIntervalDescription");
+    public string Accounts => Get("Accounts");
+    public string AccountsTitle => Get("AccountsTitle");
+    public string AccountsDescription => Get("AccountsDescription");
+    public string AddAccount => Get("AddAccount");
+    public string OpenAccount => Get("OpenAccount");
+    public string DeleteAccount => Get("DeleteAccount");
+    public string DeleteAccountTitle => Get("DeleteAccountTitle");
+    public string DeleteAccountConfirm => Get("DeleteAccountConfirm");
+    public string ClearCache => Get("ClearCache");
+    public string CacheCleared => Get("CacheCleared");
+    public string NoAccounts => Get("NoAccounts");
+    public string AccountsCount => Get("AccountsCount");
+    public string AccountAdded => Get("AccountAdded");
+    public string AccountDeleted => Get("AccountDeleted");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

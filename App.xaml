@@ -21,6 +21,9 @@
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
                 <views:SettingsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AccountsViewModel}">
+                <views:AccountsView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
