@@ -88,6 +88,12 @@
                                     <TextBlock Text="{Binding Loc.Accounts}" Margin="10 0 0 0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
+                            <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToDashboardCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE7C1;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
+                                    <TextBlock Text="{Binding Loc.Dashboard}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
                             <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToSettingsCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />

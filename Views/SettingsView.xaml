@@ -32,12 +32,12 @@
                         <Button Style="{StaticResource ThemeSwatch}" Background="#06B6D4" Command="{Binding SetThemeCommand}" CommandParameter="5" Margin="16 0 0 0" />
                     </WrapPanel>
                     <WrapPanel>
-                        <TextBlock Text="Midnight" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" />
-                        <TextBlock Text="Ocean" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
-                        <TextBlock Text="Nebula" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
-                        <TextBlock Text="Forest" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
-                        <TextBlock Text="Ruby" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
-                        <TextBlock Text="Cyber" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="{Binding Loc.ThemeDefault}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" />
+                        <TextBlock Text="{Binding Loc.ThemeBlue}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="{Binding Loc.ThemePurple}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="{Binding Loc.ThemeForest}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="{Binding Loc.ThemeRuby}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="{Binding Loc.ThemeCyber}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
                     </WrapPanel>
                 </StackPanel>
             </Border>

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Threading;
 using BloxHive.Models;
@@ -9,6 +10,7 @@ namespace BloxHive.ViewModels;
 
 public class HomeViewModel : BaseViewModel, IDisposable
 {
+    private static HomeViewModel? _instance;
     private readonly MutexService _mutexService = MutexService.Instance;
     private readonly RobloxProcessService _processService = new();
     private readonly WebhookService _webhookService = new();
@@ -91,6 +93,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
 
     public HomeViewModel()
     {
+        _instance = this;
         _mutexService.PropertyChanged += (_, _) =>
         {
             OnPropertyChanged(nameof(IsMultiInstanceActive));
@@ -249,6 +252,56 @@ public class HomeViewModel : BaseViewModel, IDisposable
 
     public bool HasProcesses => ProcessCount > 0;
     public bool HasNoProcesses => ProcessCount == 0;
+
+    public static bool GetLoopActive() => _staticLoopActive;
+
+    public static void ExternalToggleLoop(bool active)
+    {
+        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        {
+            if (_instance != null)
+                _instance.AutoLoopActive = active;
+        });
+    }
+
+    internal static List<RobloxProcessInfo> GetProcessList()
+    {
+        if (_instance != null)
+            return _instance.Processes.ToList();
+        return new RobloxProcessService().GetProcesses();
+    }
+
+    internal static List<AccountInfo> GetAccountList()
+    {
+        if (_instance != null)
+            return _instance.SavedAccounts.ToList();
+        return AccountService.Load();
+    }
+
+    internal static void SetProcessWebhook(int pid, bool enabled)
+    {
+        if (_instance == null) { Debug.WriteLine("[HomeViewModel] SetProcessWebhook: _instance ist null"); return; }
+        try
+        {
+            System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                var proc = _instance.Processes.FirstOrDefault(p => p.Id == pid);
+                if (proc != null)
+                {
+                    proc.IsWebhookEnabled = enabled;
+                    Debug.WriteLine($"[HomeViewModel] Webhook gesetzt: PID={pid}, Enabled={enabled}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[HomeViewModel] Prozess PID={pid} nicht gefunden");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[HomeViewModel] Dispatcher FEHLER: {ex.Message}");
+        }
+    }
 
     public void Dispose()
     {

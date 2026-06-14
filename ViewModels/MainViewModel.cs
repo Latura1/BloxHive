@@ -16,12 +16,14 @@ public class MainViewModel : BaseViewModel
     public ICommand NavigateToHomeCommand { get; }
     public ICommand NavigateToSettingsCommand { get; }
     public ICommand NavigateToAccountsCommand { get; }
+    public ICommand NavigateToDashboardCommand { get; }
 
     public MainViewModel()
     {
         NavigateToHomeCommand = new RelayCommand(_ => NavigateTo<HomeViewModel>());
         NavigateToSettingsCommand = new RelayCommand(_ => NavigateTo<SettingsViewModel>());
         NavigateToAccountsCommand = new RelayCommand(_ => NavigateTo<AccountsViewModel>());
+        NavigateToDashboardCommand = new RelayCommand(_ => NavigateTo<DashboardViewModel>());
 
         CurrentView = GetOrCreate<HomeViewModel>();
     }

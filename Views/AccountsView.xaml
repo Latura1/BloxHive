@@ -145,7 +145,7 @@
                                                             </ControlTemplate.Triggers>
                                                         </ControlTemplate>
                                                     </Button.Template>
-                                                    <TextBlock Text="Save" FontSize="11" />
+                                                    <TextBlock Text="{Binding DataContext.Loc.Save, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" FontSize="11" />
                                                 </Button>
                                             </Grid>
                                         </Border>

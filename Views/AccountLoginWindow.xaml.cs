@@ -18,11 +18,13 @@ public partial class AccountLoginWindow : Window
     private readonly string _tempFolder;
 
     public AccountInfo? Result { get; private set; }
+    public Translation Loc => Translation.Instance;
 
     public AccountLoginWindow()
     {
         _tempFolder = Path.Combine(Path.GetTempPath(), "BloxHive", "Login", Guid.NewGuid().ToString());
         InitializeComponent();
+        DataContext = this;
         Owner = Application.Current.MainWindow;
         Loaded += OnLoaded;
         Closed += (_, _) => CleanupTemp();
@@ -57,7 +59,7 @@ public partial class AccountLoginWindow : Window
         if (_cookieFound) return;
         Dispatcher.Invoke(() =>
         {
-            InfoText.Text = "Navigiere...";
+            InfoText.Text = Loc.AccountLoginNavigating;
         });
     }
 
@@ -69,12 +71,12 @@ public partial class AccountLoginWindow : Window
         {
             if (url.StartsWith("https://www.roblox.com/home") || url.Contains("/login?returnUrl"))
             {
-                InfoText.Text = "Login erkannt, prüfe Cookie...";
+                InfoText.Text = Loc.AccountLoginDetected;
                 CheckCookie();
             }
             else
             {
-                InfoText.Text = $"Seite geladen: {url}";
+                InfoText.Text = string.Format(Loc.AccountLoginPageLoaded, url);
             }
         });
     }
@@ -91,8 +93,8 @@ public partial class AccountLoginWindow : Window
                 _cookieFound = true;
                 _authCookie = auth.Value;
                 _cookieCheckTimer.Stop();
-                StatusText.Text = "Cookie gefunden! Hole Account-Daten...";
-                InfoText.Text = "Cookie gefunden, verarbeite...";
+                StatusText.Text = Loc.AccountLoginCookieFound;
+                InfoText.Text = Loc.AccountLoginCookieProcessing;
                 DoneButton.IsEnabled = true;
                 await FetchAndComplete();
             }
@@ -128,7 +130,7 @@ public partial class AccountLoginWindow : Window
 
                 Dispatcher.Invoke(() =>
                 {
-                    InfoText.Text = $"✅ Angemeldet als {name}";
+                    InfoText.Text = string.Format(Loc.AccountLoginLoggedIn, name);
                     DialogResult = true;
                     Close();
                 });
@@ -140,7 +142,7 @@ public partial class AccountLoginWindow : Window
         {
             Dispatcher.Invoke(() =>
             {
-                InfoText.Text = "❌ Konnte Account-Daten nicht abrufen. Fertig drücken um trotzdem zu speichern.";
+                InfoText.Text = string.Format(Loc.AccountLoginFetchFailed, Loc.Done);
                 DoneButton.IsEnabled = true;
             });
         }

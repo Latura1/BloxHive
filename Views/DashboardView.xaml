@@ -1,0 +1,138 @@
+<UserControl x:Class="BloxHive.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:BloxHive.ViewModels"
+             d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
+             mc:Ignorable="d">
+    <ScrollViewer Padding="40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 32">
+                <Border Width="48" Height="48" CornerRadius="14" Background="{DynamicResource BrushAccent}" VerticalAlignment="Center">
+                    <TextBlock Text="&#xE7C1;" FontFamily="Segoe MDL2 Assets" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel VerticalAlignment="Center" Margin="16 0 0 0">
+                    <TextBlock Text="{Binding Loc.Dashboard}" FontSize="22" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.DashboardDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 0" />
+                </StackPanel>
+            </StackPanel>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatusText}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                        <TextBlock Text="{Binding NetworkUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 6 0 0" />
+                        <TextBlock Text="{Binding LocalUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                        <Button Command="{Binding StartCommand}" IsEnabled="{Binding CanStart}" Margin="0 0 8 0"
+                                Height="32" Padding="14 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                FontSize="12" FontWeight="SemiBold">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter TargetName="border" Property="Opacity" Value="0.4" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                <TextBlock Text="{Binding Loc.DashboardStart}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DangerButton}" Command="{Binding StopCommand}" IsEnabled="{Binding CanStop}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                <TextBlock Text="{Binding Loc.DashboardStop}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="#1AEF4444" CornerRadius="12" Padding="16" Margin="0 0 0 16" Visibility="{Binding HasWarning, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel>
+                    <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="#EF4444" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <TextBlock Text="{Binding Loc.DashboardPort}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.DashboardPortDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
+
+                    <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="12" Padding="20">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
+                                     Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
+                                     Padding="8 6" BorderThickness="1" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Loc.DashboardPassword}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" Margin="0 16 0 0" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="16 16 8 0" VerticalAlignment="Center"
+                                     Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
+                                     Padding="8 6" BorderThickness="1" />
+                            <Button Grid.Row="1" Grid.Column="2" Command="{Binding SetPasswordCommand}" Margin="0 16 0 0"
+                                    Height="32" Padding="12 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                    FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"
+                                    Content="{Binding Loc.DashboardSetPassword}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}" Cursor="Hand">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.85" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <TextBlock Text="{Binding PasswordStatusText}" FontSize="12" Foreground="{DynamicResource BrushAccent}" Margin="0 8 0 0" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Loc.DashboardQR}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                    <TextBlock Text="{Binding Loc.DashboardQRDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
+
+                    <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="12" Padding="20" HorizontalAlignment="Center">
+                        <Image Source="{Binding QrCodeImage}" Width="200" Height="200" />
+                    </Border>
+
+                    <TextBlock Text="{Binding NetworkUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 12 0 0" />
+                    <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0 4 0 0" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

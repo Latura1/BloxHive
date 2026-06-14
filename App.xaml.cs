@@ -21,5 +21,8 @@ public partial class App : Application
 
         if (settings.MultiInstanceActive)
             MutexService.Instance.Acquire();
+
+        if (settings.DashboardAutoStart)
+            DashboardService.Start(settings.DashboardPort, settings.DashboardPasswordHash);
     }
 }

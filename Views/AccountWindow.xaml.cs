@@ -10,12 +10,15 @@ public partial class AccountWindow : Window
 {
     private readonly AccountInfo _account;
 
+    public Translation Loc => Translation.Instance;
+
     public AccountWindow(AccountInfo account)
     {
         _account = account;
         InitializeComponent();
+        DataContext = this;
         Owner = Application.Current.MainWindow;
-        TitleText.Text = $"BloxHive - {account.DisplayName}";
+        TitleText.Text = $"{Loc.AccountWindowTitle} - {account.DisplayName}";
         Loaded += async (_, _) => await InitializeWebView();
     }
 

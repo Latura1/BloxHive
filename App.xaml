@@ -24,6 +24,9 @@
             <DataTemplate DataType="{x:Type vm:AccountsViewModel}">
                 <views:AccountsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+                <views:DashboardView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
