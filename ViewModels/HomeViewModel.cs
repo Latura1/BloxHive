@@ -15,7 +15,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
     private readonly DispatcherTimer _webhookTimer = new();
     private int _processCount;
     private string _webhookStatus = "";
-    private bool _autoLoopActive;
+    private static bool _staticLoopActive;
 
     public bool IsMultiInstanceActive
     {
@@ -38,22 +38,23 @@ public class HomeViewModel : BaseViewModel, IDisposable
         }
     }
 
-    public string MultiInstanceStatus => _mutexService.IsActive ? Loc.MultiInstanceActive : Loc.MultiInstanceInactive;
-
     public bool AutoLoopActive
     {
-        get => _autoLoopActive;
+        get => _staticLoopActive;
         set
         {
-            if (SetProperty(ref _autoLoopActive, value))
-            {
-                if (value)
-                    StartWebhookLoop();
-                else
-                    StopWebhookLoop();
-            }
+            if (_staticLoopActive == value) return;
+            _staticLoopActive = value;
+            OnPropertyChanged();
+
+            if (value)
+                StartWebhookLoop();
+            else
+                StopWebhookLoop();
         }
     }
+
+    public string MultiInstanceStatus => _mutexService.IsActive ? Loc.MultiInstanceActive : Loc.MultiInstanceInactive;
 
     public string WebhookStatus
     {

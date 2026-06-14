@@ -297,8 +297,8 @@
     </Style>
 
     <Style x:Key="ThemeSwatch" TargetType="Button">
-        <Setter Property="Width" Value="80" />
-        <Setter Property="Height" Value="80" />
+        <Setter Property="Width" Value="72" />
+        <Setter Property="Height" Value="72" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
@@ -306,7 +306,7 @@
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Ellipse x:Name="glow" Width="80" Height="80" Opacity="0" Fill="{TemplateBinding Background}" />
-                        <Ellipse x:Name="ring" Width="80" Height="80" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="Transparent" />
+                        <Ellipse x:Name="ring" Width="72" Height="72" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="Transparent" />
                         <Ellipse x:Name="swatch" Width="72" Height="72" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{TemplateBinding Background}" RenderTransformOrigin="0.5 0.5">
                             <Ellipse.RenderTransform>
                                 <ScaleTransform />
@@ -385,20 +385,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="track" Property="Background" Value="{DynamicResource BrushAccent}" />
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="thumb" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="24" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="thumb" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="thumb" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="24" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="thumb" Property="Background" Value="#E0E0E0" />
@@ -436,6 +427,127 @@
                             <Setter TargetName="border" Property="BorderThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Slider">
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="IsSnapToTickEnabled" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Height="6" CornerRadius="3" Background="{DynamicResource BrushSurfaceDarkTertiary}" VerticalAlignment="Center" Margin="0 0 0 0" />
+                        <Track x:Name="PART_Track" Grid.Row="0" Height="36">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="RepeatButton">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RepeatButton">
+                                                        <Grid>
+                                                            <Border x:Name="fill" Height="6" CornerRadius="3" Background="{DynamicResource BrushAccent}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="RepeatButton">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RepeatButton">
+                                                        <Rectangle Fill="Transparent" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb BorderThickness="0" Width="20" Height="20">
+                                    <Thumb.Style>
+                                        <Style TargetType="Thumb">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Thumb">
+                                                        <Grid>
+                                                            <Ellipse x:Name="glow" Width="36" Height="36" Fill="{DynamicResource BrushAccent}" Opacity="0" />
+                                                            <Ellipse x:Name="ring" Width="24" Height="24" Stroke="{DynamicResource BrushAccent}" StrokeThickness="0" Fill="{DynamicResource BrushSurfaceDark}" Opacity="0" />
+                                                            <Border x:Name="thumb" Width="20" Height="20" CornerRadius="10" Background="{DynamicResource BrushAccent}" Cursor="Hand" BorderThickness="0" />
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0.2" Duration="0:0:0.15" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="StrokeThickness" To="2" Duration="0:0:0.15" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                                <Trigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="StrokeThickness" To="0" Duration="0:0:0.2" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                            <Trigger Property="IsDragging" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.1" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="StrokeThickness" To="2" Duration="0:0:0.1" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                                <Trigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+                                                                            <DoubleAnimation Storyboard.TargetName="ring" Storyboard.TargetProperty="StrokeThickness" To="0" Duration="0:0:0.2" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                        <TickBar x:Name="TopTick" Grid.Row="1" Visibility="Collapsed" />
+                        <TickBar x:Name="BottomTick" Grid.Row="1" Visibility="Collapsed" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

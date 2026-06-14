@@ -23,16 +23,22 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Loc.Theme}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                     <TextBlock Text="{Binding Loc.ThemeDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
-                    <StackPanel Orientation="Horizontal">
+                    <WrapPanel Margin="0 0 0 12">
                         <Button Style="{StaticResource ThemeSwatch}" Background="#F59E0B" Command="{Binding SetThemeCommand}" CommandParameter="0" />
-                        <Button Style="{StaticResource ThemeSwatch}" Background="#3B82F6" Command="{Binding SetThemeCommand}" CommandParameter="1" Margin="24 0 0 0" />
-                        <Button Style="{StaticResource ThemeSwatch}" Background="#8B5CF6" Command="{Binding SetThemeCommand}" CommandParameter="2" Margin="24 0 0 0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0 12 0 0">
-                        <TextBlock Text="Midnight" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="80" TextAlignment="Center" />
-                        <TextBlock Text="Ocean" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="80" TextAlignment="Center" Margin="24 0 0 0" />
-                        <TextBlock Text="Nebula" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="80" TextAlignment="Center" Margin="24 0 0 0" />
-                    </StackPanel>
+                        <Button Style="{StaticResource ThemeSwatch}" Background="#3B82F6" Command="{Binding SetThemeCommand}" CommandParameter="1" Margin="16 0 0 0" />
+                        <Button Style="{StaticResource ThemeSwatch}" Background="#8B5CF6" Command="{Binding SetThemeCommand}" CommandParameter="2" Margin="16 0 0 0" />
+                        <Button Style="{StaticResource ThemeSwatch}" Background="#22C55E" Command="{Binding SetThemeCommand}" CommandParameter="3" Margin="16 0 0 0" />
+                        <Button Style="{StaticResource ThemeSwatch}" Background="#EF4444" Command="{Binding SetThemeCommand}" CommandParameter="4" Margin="16 0 0 0" />
+                        <Button Style="{StaticResource ThemeSwatch}" Background="#06B6D4" Command="{Binding SetThemeCommand}" CommandParameter="5" Margin="16 0 0 0" />
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Midnight" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" />
+                        <TextBlock Text="Ocean" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="Nebula" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="Forest" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="Ruby" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                        <TextBlock Text="Cyber" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Width="72" TextAlignment="Center" Margin="16 0 0 0" />
+                    </WrapPanel>
                 </StackPanel>
             </Border>
 
@@ -45,8 +51,13 @@
                     <TextBox Style="{StaticResource SettingsInput}" Text="{Binding WebhookUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Text="{Binding Loc.WebhookUrlPlaceholder}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 20" />
 
-                    <TextBlock Text="{Binding Loc.WebhookInterval}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 0 0 6" />
-                    <TextBox Style="{StaticResource SettingsInput}" Text="{Binding IntervalText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                        <TextBlock Text="{Binding Loc.WebhookInterval}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding IntervalValue, StringFormat='{}{0}s'}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushAccent}" Margin="12 0 0 0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Slider Minimum="5" Maximum="600" TickFrequency="5" IsSnapToTickEnabled="True"
+                            Value="{Binding IntervalValue, Mode=TwoWay}"
+                            Foreground="{DynamicResource BrushAccent}" Margin="0 4 0 4" />
                     <TextBlock Text="{Binding Loc.WebhookIntervalDescription}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 20" />
 
                     <Button Height="36" Padding="16 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand" Command="{Binding TestWebhookCommand}" HorizontalAlignment="Left">

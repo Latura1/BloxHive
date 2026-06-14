@@ -47,17 +47,16 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    public string IntervalText
+    public int IntervalValue
     {
-        get => SettingsService.Load().AutoWebhookInterval.ToString();
+        get => SettingsService.Load().AutoWebhookInterval;
         set
         {
-            if (int.TryParse(value, out var num) && num >= 1 && num <= 3600)
-            {
-                var settings = SettingsService.Load();
-                settings.AutoWebhookInterval = num;
-                SettingsService.Save(settings);
-            }
+            var clamped = Math.Clamp(value, 5, 600);
+            var settings = SettingsService.Load();
+            if (settings.AutoWebhookInterval == clamped) return;
+            settings.AutoWebhookInterval = clamped;
+            SettingsService.Save(settings);
             OnPropertyChanged();
         }
     }
