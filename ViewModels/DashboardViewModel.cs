@@ -52,6 +52,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
                 OnPropertyChanged(nameof(CanStart));
                 OnPropertyChanged(nameof(CanStop));
                 OnPropertyChanged(nameof(StatusText));
+                OnPropertyChanged(nameof(ShowNetworkDetails));
             }
         }
     }
@@ -117,9 +118,14 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     public string StatusText => IsRunning ? Loc.DashboardRunning : Loc.DashboardStopped;
     public string PasswordStatusText => HasPassword ? Loc.DashboardPasswordSet : Loc.DashboardPasswordNotSet;
 
+    public bool IsExperimentalEnabled => SettingsService.Load().ExperimentalFeatures;
+    public bool ShowNetworkDetails => IsExperimentalEnabled && IsRunning;
+    public bool CanEditPort => IsExperimentalEnabled;
+
     public ICommand StartCommand { get; }
     public ICommand StopCommand { get; }
     public ICommand SetPasswordCommand { get; }
+    public ICommand CopyLinkCommand { get; }
 
     public DashboardViewModel()
     {
@@ -130,6 +136,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         StartCommand = new RelayCommand(_ => Start());
         StopCommand = new RelayCommand(_ => Stop());
         SetPasswordCommand = new RelayCommand(_ => SetPassword());
+        CopyLinkCommand = new RelayCommand(_ => CopyLink());
 
         DashboardService.RunningChanged += OnRunningChanged;
         DashboardService.TunnelUrlChanged += OnTunnelUrlChanged;
@@ -142,11 +149,19 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         }
     }
 
+    private void RefreshExperimentalState()
+    {
+        OnPropertyChanged(nameof(IsExperimentalEnabled));
+        OnPropertyChanged(nameof(ShowNetworkDetails));
+        OnPropertyChanged(nameof(CanEditPort));
+    }
+
     private void Start()
     {
         if (IsRunning) return;
         var settings = SettingsService.Load();
         StatusMessage = "";
+        RefreshExperimentalState();
         try
         {
             var result = DashboardService.Start(Port, settings.DashboardPasswordHash);
@@ -201,6 +216,21 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         NetworkUrl = DashboardService.NetworkUrl;
         TunnelUrl = DashboardService.PublicUrl;
         GenerateQrCode(TunnelUrl ?? NetworkUrl);
+    }
+
+    private void CopyLink()
+    {
+        var url = TunnelUrl ?? NetworkUrl;
+        if (!string.IsNullOrEmpty(url))
+        {
+            Clipboard.SetText(url);
+            var prev = StatusMessage;
+            StatusMessage = Loc.Copied;
+            Task.Delay(2000).ContinueWith(_ => Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (StatusMessage == Loc.Copied) StatusMessage = prev;
+            }));
+        }
     }
 
     private void OnTunnelUrlChanged(string? url)

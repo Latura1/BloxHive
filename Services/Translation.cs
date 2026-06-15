@@ -86,6 +86,9 @@ public class Translation : INotifyPropertyChanged
         ["DashboardQR"] = "QR-Code",
         ["DashboardQRDescription"] = "Scanne den Code mit deinem Smartphone für schnellen Zugriff.",
         ["DashboardUrlHint"] = "Im selben Netzwerk auf einem anderen Gerät öffnen",
+        ["DashboardExperimentalHint"] = "Lokale IPs und Port-Änderung nur mit ⚙ Experimental sichtbar",
+        ["Copy"] = "Kopieren",
+        ["Copied"] = "✅ Kopiert!",
         ["AccountLoginTitle"] = "Account hinzufügen",
         ["AccountLoginLoading"] = "Lade Login-Seite...",
         ["AccountLoginInfo"] = "Nach dem Login automatisch erkennen oder manuell bestätigen.",
@@ -189,6 +192,9 @@ public class Translation : INotifyPropertyChanged
         ["DashboardQR"] = "QR Code",
         ["DashboardQRDescription"] = "Scan the code with your phone for quick access.",
         ["DashboardUrlHint"] = "Open on another device in the same network",
+        ["DashboardExperimentalHint"] = "Local IPs and port changes only visible with ⚙ Experimental",
+        ["Copy"] = "Copy",
+        ["Copied"] = "✅ Copied!",
         ["AccountLoginTitle"] = "Add Account",
         ["AccountLoginLoading"] = "Loading login page...",
         ["AccountLoginInfo"] = "Auto-detect after login or confirm manually.",
@@ -323,6 +329,9 @@ public class Translation : INotifyPropertyChanged
     public string DashboardQR => Get("DashboardQR");
     public string DashboardQRDescription => Get("DashboardQRDescription");
     public string DashboardUrlHint => Get("DashboardUrlHint");
+    public string DashboardExperimentalHint => Get("DashboardExperimentalHint");
+    public string Copy => Get("Copy");
+    public string Copied => Get("Copied");
     public string AccountLoginTitle => Get("AccountLoginTitle");
     public string AccountLoginLoading => Get("AccountLoginLoading");
     public string AccountLoginInfo => Get("AccountLoginInfo");

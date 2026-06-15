@@ -27,9 +27,18 @@
 
                     <StackPanel>
                         <TextBlock Text="{Binding StatusText}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
-                        <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 6 0 0" TextWrapping="Wrap" />
-                        <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
-                        <TextBlock Text="{Binding LocalUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                        <StackPanel Orientation="Horizontal" Margin="0 6 0 0">
+                            <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <Button Command="{Binding CopyLinkCommand}" Height="26" Padding="8 0" Margin="8 0 0 0"
+                                    Background="{DynamicResource BrushSurfaceDarkTertiary}" Foreground="{DynamicResource BrushTextSecondary}"
+                                    BorderThickness="0" Cursor="Hand" FontSize="11" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Loc.Copy}" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding ShowNetworkDetails, Converter={StaticResource BoolToVisibility}}">
+                            <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                            <TextBlock Text="{Binding LocalUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
+                        </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
@@ -91,6 +100,7 @@
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
+                                     IsEnabled="{Binding CanEditPort}"
                                      Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
                                      Padding="8 6" BorderThickness="1" />
 
@@ -130,8 +140,16 @@
                         <Image Source="{Binding QrCodeImage}" Width="200" Height="200" />
                     </Border>
 
-                    <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="#22C55E" HorizontalAlignment="Center" Margin="0 12 0 0" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 4 0 0" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 12 0 0">
+                        <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="#22C55E" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        <Button Command="{Binding CopyLinkCommand}" Height="26" Padding="8 0" Margin="8 0 0 0"
+                                Background="{DynamicResource BrushSurfaceDarkTertiary}" Foreground="{DynamicResource BrushTextSecondary}"
+                                BorderThickness="0" Cursor="Hand" FontSize="11" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Loc.Copy}" />
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 4 0 0"
+                               Visibility="{Binding ShowNetworkDetails, Converter={StaticResource BoolToVisibility}}" />
                     <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0 4 0 0" />
                 </StackPanel>
             </Border>
