@@ -27,7 +27,8 @@
 
                     <StackPanel>
                         <TextBlock Text="{Binding StatusText}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
-                        <TextBlock Text="{Binding NetworkUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 6 0 0" />
+                        <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0 6 0 0" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
                         <TextBlock Text="{Binding LocalUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 2 0 0" />
                     </StackPanel>
 
@@ -129,7 +130,8 @@
                         <Image Source="{Binding QrCodeImage}" Width="200" Height="200" />
                     </Border>
 
-                    <TextBlock Text="{Binding NetworkUrl}" FontSize="13" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 12 0 0" />
+                    <TextBlock Text="{Binding TunnelUrl}" FontSize="13" Foreground="#22C55E" HorizontalAlignment="Center" Margin="0 12 0 0" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 4 0 0" />
                     <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0 4 0 0" />
                 </StackPanel>
             </Border>

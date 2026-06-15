@@ -21,6 +21,11 @@ public static partial class DashboardService
 
     private static bool _isLocalOnly;
 
+    static DashboardService()
+    {
+        TunnelService.UrlChanged += url => TunnelUrlChanged?.Invoke(url);
+    }
+
     public static bool IsRunning => _listener?.IsListening ?? false;
     public static bool IsNetworkAccessible => !_isLocalOnly;
     public static string LocalUrl => $"http://localhost:{_port}";
@@ -35,7 +40,10 @@ public static partial class DashboardService
         }
     }
 
+    public static string? PublicUrl => TunnelService.PublicUrl;
+
     public static event Action<bool>? RunningChanged;
+    public static event Action<string?>? TunnelUrlChanged;
 
     public static string Start(int port, string passwordHash)
     {
@@ -61,6 +69,7 @@ public static partial class DashboardService
             _isLocalOnly = true;
         }
 
+        _ = TunnelService.StartAsync(port);
         _ = Run(_cts.Token);
         RunningChanged?.Invoke(true);
         return _isLocalOnly ? $"http://localhost:{port}" : $"http://+:{port}";
@@ -68,6 +77,7 @@ public static partial class DashboardService
 
     public static void Stop()
     {
+        _ = TunnelService.StopAsync();
         _cts?.Cancel();
         try { _listener?.Stop(); } catch { }
         try { _listener?.Close(); } catch { }
@@ -221,7 +231,8 @@ public static partial class DashboardService
             loopActive = HomeViewModel.GetLoopActive(),
             multiInstanceActive = MutexService.Instance.IsActive,
             webhookUrl = !string.IsNullOrEmpty(settings.WebhookUrl),
-            url = NetworkUrl,
+            url = PublicUrl ?? NetworkUrl,
+            tunnelUrl = PublicUrl,
             language = lang,
             theme = new { accent, bgDark, bgCard, bgTertiary, textPrimary, textSecondary, textMuted }
         });

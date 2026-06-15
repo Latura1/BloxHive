@@ -20,6 +20,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     private bool _hasPassword;
     private bool _isLocalOnly;
     private string _statusMessage = "";
+    private string? _tunnelUrl;
 
     public int Port
     {
@@ -107,6 +108,12 @@ public class DashboardViewModel : BaseViewModel, IDisposable
 
     public bool HasWarning => !string.IsNullOrEmpty(StatusMessage) || IsLocalOnly;
 
+    public string? TunnelUrl
+    {
+        get => _tunnelUrl;
+        set => SetProperty(ref _tunnelUrl, value);
+    }
+
     public string StatusText => IsRunning ? Loc.DashboardRunning : Loc.DashboardStopped;
     public string PasswordStatusText => HasPassword ? Loc.DashboardPasswordSet : Loc.DashboardPasswordNotSet;
 
@@ -125,6 +132,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         SetPasswordCommand = new RelayCommand(_ => SetPassword());
 
         DashboardService.RunningChanged += OnRunningChanged;
+        DashboardService.TunnelUrlChanged += OnTunnelUrlChanged;
 
         if (DashboardService.IsRunning)
         {
@@ -160,6 +168,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         IsRunning = false;
         LocalUrl = "";
         NetworkUrl = "";
+        TunnelUrl = "";
         QrCodeImage = null;
     }
 
@@ -189,7 +198,18 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     {
         LocalUrl = DashboardService.LocalUrl;
         NetworkUrl = DashboardService.NetworkUrl;
-        GenerateQrCode(NetworkUrl);
+        TunnelUrl = DashboardService.PublicUrl;
+        GenerateQrCode(TunnelUrl ?? NetworkUrl);
+    }
+
+    private void OnTunnelUrlChanged(string? url)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            TunnelUrl = url;
+            if (!string.IsNullOrEmpty(url))
+                GenerateQrCode(url);
+        });
     }
 
     private void GenerateQrCode(string url)
@@ -226,6 +246,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
             {
                 LocalUrl = "";
                 NetworkUrl = "";
+                TunnelUrl = "";
                 QrCodeImage = null;
             }
             IsRunning = running;
@@ -235,5 +256,6 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     public void Dispose()
     {
         DashboardService.RunningChanged -= OnRunningChanged;
+        DashboardService.TunnelUrlChanged -= OnTunnelUrlChanged;
     }
 }
