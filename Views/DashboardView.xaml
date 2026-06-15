@@ -44,7 +44,7 @@
                                         <TextBlock Text="&#xE8C8;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </Button>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 6 0 0" />
+                                <TextBlock Text="{Binding Loc.DashboardTunnelDescription}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 6 0 0" />
                             </StackPanel>
                         </Border>
 
@@ -53,10 +53,11 @@
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
                                         <TextBlock Text="&#xE8A7;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center" Margin="0 0 8 0" />
-                                        <TextBlock Text="Lokales Netzwerk" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding Loc.DashboardLocalNetwork}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center" />
                                     </StackPanel>
                                     <TextBlock Text="{Binding NetworkUrl}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 0 0 4" />
                                     <TextBlock Text="{Binding LocalUrl}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="10" Foreground="{DynamicResource BrushTextMuted}" Margin="0 8 0 0" />
                                 </StackPanel>
                             </Border>
                         </StackPanel>
@@ -115,13 +116,10 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
-                                <TextBox Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
-                                         Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
-                                         Padding="8 6" BorderThickness="1" />
-                                <Button Grid.Column="2" Command="{Binding ResetPortCommand}" Height="30" Padding="10 0"
-                                        Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextSecondary}"
-                                        BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1" Cursor="Hand" FontSize="11" VerticalAlignment="Center"
-                                        Content="Reset auf 5000" />
+                                <TextBox Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0"
+                                         Style="{StaticResource SettingsInput}" Height="36" />
+                                <Button Grid.Column="2" Style="{StaticResource DangerButton}" Command="{Binding ResetPortCommand}"
+                                        Content="{Binding Loc.DashboardReset}" />
                             </Grid>
 
                             <Grid>
@@ -132,11 +130,10 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding Loc.DashboardPassword}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
-                                <TextBox Grid.Column="1" Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Width="180" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
-                                         Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
-                                         Padding="8 6" BorderThickness="1" />
+                                <TextBox Grid.Column="1" Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Width="180" HorizontalAlignment="Left" Margin="16 0 8 0"
+                                         Style="{StaticResource SettingsInput}" Height="36" />
                                 <Button Grid.Column="2" Command="{Binding SetPasswordCommand}" Margin="0 0 6 0"
-                                        Height="30" Padding="12 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                        Height="36" Padding="16 0" Background="{DynamicResource BrushAccent}" Foreground="White" BorderThickness="0" Cursor="Hand"
                                         FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"
                                         Content="{Binding Loc.DashboardSetPassword}">
                                     <Button.Template>
@@ -152,10 +149,8 @@
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
-                                <Button Grid.Column="3" Command="{Binding ResetPasswordCommand}" Height="30" Padding="10 0" Margin="0 0 0 0"
-                                        Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextSecondary}"
-                                        BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1" Cursor="Hand" FontSize="11" VerticalAlignment="Center"
-                                        Content="Reset" />
+                                <Button Grid.Column="3" Style="{StaticResource DangerButton}" Command="{Binding ResetPasswordCommand}"
+                                        Content="{Binding Loc.DashboardReset}" Margin="0 0 0 0" />
                             </Grid>
                         </StackPanel>
                     </Border>
@@ -187,7 +182,7 @@
 
                     <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 6 0 0"
                                Visibility="{Binding ShowNetworkDetails, Converter={StaticResource BoolToVisibility}}" />
-                    <TextBlock Text="{Binding Loc.DashboardUrlHint}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0 4 0 0" />
+                    <TextBlock Text="{Binding Loc.DashboardTunnelDescription}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0 4 0 0" />
                 </StackPanel>
             </Border>
         </StackPanel>

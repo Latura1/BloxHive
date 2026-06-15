@@ -86,6 +86,9 @@ public class Translation : INotifyPropertyChanged
         ["DashboardQR"] = "QR-Code",
         ["DashboardQRDescription"] = "Scanne den Code mit deinem Smartphone für schnellen Zugriff.",
         ["DashboardUrlHint"] = "Im selben Netzwerk auf einem anderen Gerät öffnen",
+        ["DashboardLocalNetwork"] = "Lokales Netzwerk",
+        ["DashboardTunnelDescription"] = "Über Cloudflare Tunnel weltweit erreichbar",
+        ["DashboardReset"] = "Zurücksetzen",
         ["DashboardExperimentalHint"] = "Lokale IPs und Port-Änderung nur mit ⚙ Experimental sichtbar",
         ["Copy"] = "Kopieren",
         ["Copied"] = "✅ Kopiert!",
@@ -192,6 +195,9 @@ public class Translation : INotifyPropertyChanged
         ["DashboardQR"] = "QR Code",
         ["DashboardQRDescription"] = "Scan the code with your phone for quick access.",
         ["DashboardUrlHint"] = "Open on another device in the same network",
+        ["DashboardLocalNetwork"] = "Local Network",
+        ["DashboardTunnelDescription"] = "Accessible worldwide via Cloudflare Tunnel",
+        ["DashboardReset"] = "Reset",
         ["DashboardExperimentalHint"] = "Local IPs and port changes only visible with ⚙ Experimental",
         ["Copy"] = "Copy",
         ["Copied"] = "✅ Copied!",
@@ -329,6 +335,9 @@ public class Translation : INotifyPropertyChanged
     public string DashboardQR => Get("DashboardQR");
     public string DashboardQRDescription => Get("DashboardQRDescription");
     public string DashboardUrlHint => Get("DashboardUrlHint");
+    public string DashboardLocalNetwork => Get("DashboardLocalNetwork");
+    public string DashboardTunnelDescription => Get("DashboardTunnelDescription");
+    public string DashboardReset => Get("DashboardReset");
     public string DashboardExperimentalHint => Get("DashboardExperimentalHint");
     public string Copy => Get("Copy");
     public string Copied => Get("Copied");

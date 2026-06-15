@@ -10,7 +10,7 @@ public class SettingsViewModel : BaseViewModel
     private string _webhookStatus = "";
     private bool _isTesting;
 
-    public ObservableCollection<string> Languages { get; } = [];
+    public ObservableCollection<string> Languages { get; } = ["Deutsch", "English"];
 
     public int SelectedLanguageIndex
     {
@@ -91,15 +91,7 @@ public class SettingsViewModel : BaseViewModel
 
     public SettingsViewModel()
     {
-        Languages.Clear();
-        Languages.Add(Loc.German);
-        Languages.Add(Loc.English);
-        Loc.PropertyChanged += (_, _) =>
-        {
-            Languages[0] = Loc.German;
-            Languages[1] = Loc.English;
-            OnPropertyChanged(nameof(SelectedLanguageIndex));
-        };
+        Loc.PropertyChanged += (_, _) => OnPropertyChanged(nameof(SelectedLanguageIndex));
         ThemeManager.Instance.PropertyChanged += (_, _) => OnPropertyChanged(nameof(SelectedThemeIndex));
 
         SetThemeCommand = new RelayCommand(param =>
