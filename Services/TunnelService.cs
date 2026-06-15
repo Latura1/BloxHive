@@ -15,6 +15,7 @@ public static partial class TunnelService
     public static bool IsRunning => _process is { HasExited: false };
 
     public static event Action<string?>? UrlChanged;
+    public static event Action<string>? StatusChanged;
 
     public static async Task StartAsync(int localPort)
     {
@@ -23,14 +24,17 @@ public static partial class TunnelService
         _binaryPath = GetBinaryPath();
         if (!File.Exists(_binaryPath))
         {
-            await DownloadBinary();
-            if (!File.Exists(_binaryPath))
+            StatusChanged?.Invoke("Lade Cloudflare Tunnel herunter...");
+            var ok = await DownloadBinary();
+            if (!ok)
             {
+                StatusChanged?.Invoke("❌ Cloudflare Download fehlgeschlagen – Tunnel nicht verfügbar.");
                 UrlChanged?.Invoke(null);
                 return;
             }
         }
 
+        StatusChanged?.Invoke("Starte Cloudflare Tunnel...");
         var psi = new ProcessStartInfo
         {
             FileName = _binaryPath,
@@ -42,9 +46,17 @@ public static partial class TunnelService
         };
 
         _process = new Process { StartInfo = psi };
-        _process.Start();
-
-        _ = Task.Run(() => ReadOutput(_process));
+        try
+        {
+            _process.Start();
+            _ = Task.Run(() => ReadOutput(_process));
+            StatusChanged?.Invoke("Verbinde mit Cloudflare...");
+        }
+        catch (Exception ex)
+        {
+            StatusChanged?.Invoke($"❌ Tunnel-Fehler: {ex.Message}");
+            UrlChanged?.Invoke(null);
+        }
     }
 
     public static Task StopAsync()
@@ -68,19 +80,18 @@ public static partial class TunnelService
                 var line = await proc.StandardOutput.ReadLineAsync();
                 if (line == null) break;
 
-                Debug.WriteLine($"[TunnelService] {line}");
-
                 var m = UrlRegex().Match(line);
                 if (m.Success)
                 {
-                    _publicUrl = m.Groups[1].Value;
+                    _publicUrl = m.Value;
+                    StatusChanged?.Invoke($"✅ Tunnel aktiv: {_publicUrl}");
                     UrlChanged?.Invoke(_publicUrl);
                 }
             }
 
             var error = await proc.StandardError.ReadToEndAsync();
-            if (!string.IsNullOrEmpty(error))
-                Debug.WriteLine($"[TunnelService] STDERR: {error}");
+            if (!string.IsNullOrEmpty(error) && error.Contains("error", StringComparison.OrdinalIgnoreCase))
+                StatusChanged?.Invoke($"⚠ Tunnel: {error[..Math.Min(error.Length, 200)]}");
         }
         catch { }
     }
@@ -92,7 +103,7 @@ public static partial class TunnelService
         return Path.Combine(dir, "cloudflared.exe");
     }
 
-    private static async Task DownloadBinary()
+    private static async Task<bool> DownloadBinary()
     {
         try
         {
@@ -100,13 +111,15 @@ public static partial class TunnelService
                 ? "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe"
                 : "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe";
 
-            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
+            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) };
             var data = await client.GetByteArrayAsync(url);
             await File.WriteAllBytesAsync(_binaryPath!, data);
+            return true;
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"[TunnelService] Download fehlgeschlagen: {ex.Message}");
+            return false;
         }
     }
 

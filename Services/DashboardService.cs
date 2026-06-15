@@ -24,7 +24,10 @@ public static partial class DashboardService
     static DashboardService()
     {
         TunnelService.UrlChanged += url => TunnelUrlChanged?.Invoke(url);
+        TunnelService.StatusChanged += msg => TunnelStatusChanged?.Invoke(msg);
     }
+
+    public static event Action<string>? TunnelStatusChanged;
 
     public static bool IsRunning => _listener?.IsListening ?? false;
     public static bool IsNetworkAccessible => !_isLocalOnly;

@@ -133,6 +133,7 @@ public class DashboardViewModel : BaseViewModel, IDisposable
 
         DashboardService.RunningChanged += OnRunningChanged;
         DashboardService.TunnelUrlChanged += OnTunnelUrlChanged;
+        DashboardService.TunnelStatusChanged += OnTunnelStatusChanged;
 
         if (DashboardService.IsRunning)
         {
@@ -208,7 +209,18 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         {
             TunnelUrl = url;
             if (!string.IsNullOrEmpty(url))
+            {
                 GenerateQrCode(url);
+                StatusMessage = "";
+            }
+        });
+    }
+
+    private void OnTunnelStatusChanged(string msg)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            StatusMessage = msg;
         });
     }
 
@@ -257,5 +269,6 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     {
         DashboardService.RunningChanged -= OnRunningChanged;
         DashboardService.TunnelUrlChanged -= OnTunnelUrlChanged;
+        DashboardService.TunnelStatusChanged -= OnTunnelStatusChanged;
     }
 }
