@@ -81,7 +81,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}" Margin="0 0 0 16" Visibility="{Binding CanEditPort, Converter={StaticResource BoolToVisibility}}">
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
                 <StackPanel>
                     <TextBlock Text="{Binding Loc.DashboardPort}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                     <TextBlock Text="{Binding Loc.DashboardPortDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
@@ -96,12 +96,21 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center"
+                                       Visibility="{Binding CanEditPort, Converter={StaticResource BoolToVisibility}}" />
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
+                                     Visibility="{Binding CanEditPort, Converter={StaticResource BoolToVisibility}}"
                                      Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
                                      Padding="8 6" BorderThickness="1" />
+                            <Button Grid.Row="0" Grid.Column="2" Command="{Binding ResetPortCommand}" Height="26" Padding="8 0" Margin="0 0 8 0"
+                                    Visibility="{Binding CanEditPort, Converter={StaticResource BoolToVisibility}}"
+                                    Background="{DynamicResource BrushSurfaceDarkTertiary}" Foreground="{DynamicResource BrushTextSecondary}"
+                                    BorderThickness="0" Cursor="Hand" FontSize="11" VerticalAlignment="Center"
+                                    Content="Reset">
+                            </Button>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Loc.DashboardPassword}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" Margin="0 16 0 0" />
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="16 16 8 0" VerticalAlignment="Center"
@@ -123,6 +132,11 @@
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="3" Command="{Binding ResetPasswordCommand}" Height="26" Padding="8 0" Margin="8 16 0 0"
+                                    Background="{DynamicResource BrushSurfaceDarkTertiary}" Foreground="{DynamicResource BrushTextSecondary}"
+                                    BorderThickness="0" Cursor="Hand" FontSize="11" VerticalAlignment="Center"
+                                    Content="Reset">
                             </Button>
                         </Grid>
                     </Border>

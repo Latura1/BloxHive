@@ -125,6 +125,8 @@ public class DashboardViewModel : BaseViewModel, IDisposable
     public ICommand StartCommand { get; }
     public ICommand StopCommand { get; }
     public ICommand SetPasswordCommand { get; }
+    public ICommand ResetPasswordCommand { get; }
+    public ICommand ResetPortCommand { get; }
     public ICommand CopyLinkCommand { get; }
 
     public DashboardViewModel()
@@ -136,6 +138,8 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         StartCommand = new RelayCommand(_ => Start());
         StopCommand = new RelayCommand(_ => Stop());
         SetPasswordCommand = new RelayCommand(_ => SetPassword());
+        ResetPasswordCommand = new RelayCommand(_ => ResetPassword());
+        ResetPortCommand = new RelayCommand(_ => ResetPort());
         CopyLinkCommand = new RelayCommand(_ => CopyLink());
 
         DashboardService.RunningChanged += OnRunningChanged;
@@ -216,6 +220,34 @@ public class DashboardViewModel : BaseViewModel, IDisposable
         NetworkUrl = DashboardService.NetworkUrl;
         TunnelUrl = DashboardService.PublicUrl;
         GenerateQrCode(TunnelUrl ?? NetworkUrl);
+    }
+
+    private void ResetPassword()
+    {
+        PasswordInput = "";
+        var s = SettingsService.Load();
+        s.DashboardPasswordHash = "";
+        SettingsService.Save(s);
+        HasPassword = false;
+        OnPropertyChanged(nameof(PasswordInput));
+        if (IsRunning)
+        {
+            DashboardService.Stop();
+            DashboardService.Start(Port, "");
+            UpdateUrls();
+        }
+    }
+
+    private void ResetPort()
+    {
+        Port = 5000;
+        if (IsRunning)
+        {
+            var s = SettingsService.Load();
+            DashboardService.Stop();
+            DashboardService.Start(Port, s.DashboardPasswordHash ?? "");
+            UpdateUrls();
+        }
     }
 
     private void CopyLink()
