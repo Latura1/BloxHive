@@ -81,7 +81,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16" Visibility="{Binding CanEditPort, Converter={StaticResource BoolToVisibility}}">
                 <StackPanel>
                     <TextBlock Text="{Binding Loc.DashboardPort}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                     <TextBlock Text="{Binding Loc.DashboardPortDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
@@ -100,7 +100,6 @@
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Port" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="16 0 8 0" VerticalAlignment="Center"
-                                     IsEnabled="{Binding CanEditPort}"
                                      Background="{DynamicResource BrushSurfaceDark}" Foreground="{DynamicResource BrushTextPrimary}" BorderBrush="{DynamicResource BrushBorder}"
                                      Padding="8 6" BorderThickness="1" />
 
