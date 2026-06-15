@@ -42,7 +42,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}">
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
                 <StackPanel>
                     <TextBlock Text="{Binding Loc.Webhook}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                     <TextBlock Text="{Binding Loc.WebhookDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 20" />
@@ -91,7 +91,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}">
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>

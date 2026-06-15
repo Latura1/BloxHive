@@ -100,6 +100,19 @@
                                     <TextBlock Text="{Binding Loc.Settings}" Margin="10 0 0 0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
+                            <TextBlock Text="{Binding Loc.Tools}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource BrushTextMuted}" Margin="16 12 0 12" />
+                            <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToLogsCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE943;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
+                                    <TextBlock Text="{Binding Loc.LogsTitle}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource SidebarButton}" Command="{Binding NavigateToBackupCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE718;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Width="20" />
+                                    <TextBlock Text="{Binding Loc.BackupTitle}" Margin="10 0 0 0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Border>

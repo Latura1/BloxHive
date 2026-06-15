@@ -18,6 +18,7 @@ public class Translation : INotifyPropertyChanged
         ["Home"] = "Haupt",
         ["Settings"] = "Einstellungen",
         ["Navigation"] = "NAVIGATION",
+        ["Tools"] = "TOOLS",
         ["Theme"] = "Design",
         ["ThemeDescription"] = "Wähle ein Farbschema für die App.",
         ["ThemeDefault"] = "Midnight",
@@ -112,6 +113,26 @@ public class Translation : INotifyPropertyChanged
         ["ThemeForest"] = "Forest",
         ["ThemeRuby"] = "Ruby",
         ["ThemeCyber"] = "Cyber",
+        ["LogsTitle"] = "App Logs",
+        ["LogsDescription"] = "Alle App-Ereignisse und Fehler im Überblick.",
+        ["LogsClear"] = "Leeren",
+        ["LogsDownload"] = "Logs exportieren",
+        ["LogsDownloadSuccess"] = "✅ Logs gespeichert!",
+        ["BackupTitle"] = "Backup",
+        ["BackupDescription"] = "Accounts und Einstellungen exportieren oder importieren.",
+        ["BackupExport"] = "Exportieren",
+        ["BackupExportInfo"] = "Erstellt eine ZIP-Datei mit allen Accounts (inkl. Cookies) und den App-Einstellungen.",
+        ["BackupExportButton"] = "Backup erstellen",
+        ["BackupExportTitle"] = "Backup speichern unter",
+        ["BackupExportSuccess"] = "✅ Backup erfolgreich erstellt!",
+        ["BackupImport"] = "Importieren",
+        ["BackupImportInfo"] = "Stellt ein früheres Backup komplett wieder her. Aktuelle Daten werden überschrieben.",
+        ["BackupImportButton"] = "Backup wiederherstellen",
+        ["BackupImportTitle"] = "Backup-Datei auswählen",
+        ["BackupImportSuccess"] = "✅ Backup erfolgreich wiederhergestellt!",
+        ["BackupPreviewFormat"] = "{0} Account(s), Sprache: {1}, Design: {2}",
+        ["BackupImportConfirm"] = "Backup wirklich importieren?",
+        ["BackupError"] = "❌ Fehler",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -127,6 +148,7 @@ public class Translation : INotifyPropertyChanged
         ["Home"] = "Main",
         ["Settings"] = "Settings",
         ["Navigation"] = "NAVIGATION",
+        ["Tools"] = "TOOLS",
         ["Theme"] = "Theme",
         ["ThemeDescription"] = "Choose a color scheme for the app.",
         ["ThemeDefault"] = "Midnight",
@@ -221,6 +243,26 @@ public class Translation : INotifyPropertyChanged
         ["ThemeForest"] = "Forest",
         ["ThemeRuby"] = "Ruby",
         ["ThemeCyber"] = "Cyber",
+        ["LogsTitle"] = "App Logs",
+        ["LogsDescription"] = "View all app events and errors.",
+        ["LogsClear"] = "Clear",
+        ["LogsDownload"] = "Export Logs",
+        ["LogsDownloadSuccess"] = "✅ Logs saved!",
+        ["BackupTitle"] = "Backup",
+        ["BackupDescription"] = "Export or import accounts and settings.",
+        ["BackupExport"] = "Export",
+        ["BackupExportInfo"] = "Creates a ZIP file containing all accounts (incl. cookies) and app settings.",
+        ["BackupExportButton"] = "Create Backup",
+        ["BackupExportTitle"] = "Save backup as",
+        ["BackupExportSuccess"] = "✅ Backup created successfully!",
+        ["BackupImport"] = "Import",
+        ["BackupImportInfo"] = "Restores a previous backup completely. Current data will be overwritten.",
+        ["BackupImportButton"] = "Restore Backup",
+        ["BackupImportTitle"] = "Select backup file",
+        ["BackupImportSuccess"] = "✅ Backup restored successfully!",
+        ["BackupPreviewFormat"] = "{0} account(s), Language: {1}, Theme: {2}",
+        ["BackupImportConfirm"] = "Really import this backup?",
+        ["BackupError"] = "❌ Error",
     };
 
     private static Translation? _instance;
@@ -267,6 +309,7 @@ public class Translation : INotifyPropertyChanged
     public string Home => Get("Home");
     public string Settings => Get("Settings");
     public string Navigation => Get("Navigation");
+    public string Tools => Get("Tools");
     public string Theme => Get("Theme");
     public string ThemeDescription => Get("ThemeDescription");
     public string ThemeDefault => Get("ThemeDefault");
@@ -361,6 +404,26 @@ public class Translation : INotifyPropertyChanged
     public string ThemeForest => Get("ThemeForest");
     public string ThemeRuby => Get("ThemeRuby");
     public string ThemeCyber => Get("ThemeCyber");
+    public string LogsTitle => Get("LogsTitle");
+    public string LogsDescription => Get("LogsDescription");
+    public string LogsClear => Get("LogsClear");
+    public string LogsDownload => Get("LogsDownload");
+    public string LogsDownloadSuccess => Get("LogsDownloadSuccess");
+    public string BackupTitle => Get("BackupTitle");
+    public string BackupDescription => Get("BackupDescription");
+    public string BackupExport => Get("BackupExport");
+    public string BackupExportInfo => Get("BackupExportInfo");
+    public string BackupExportButton => Get("BackupExportButton");
+    public string BackupExportTitle => Get("BackupExportTitle");
+    public string BackupExportSuccess => Get("BackupExportSuccess");
+    public string BackupImport => Get("BackupImport");
+    public string BackupImportInfo => Get("BackupImportInfo");
+    public string BackupImportButton => Get("BackupImportButton");
+    public string BackupImportTitle => Get("BackupImportTitle");
+    public string BackupImportSuccess => Get("BackupImportSuccess");
+    public string BackupPreviewFormat => Get("BackupPreviewFormat");
+    public string BackupImportConfirm => Get("BackupImportConfirm");
+    public string BackupError => Get("BackupError");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -22,7 +22,7 @@ public static class RobloxApiService
                     _cachedCookie = AccountService.Decrypt(account.CookieEncrypted);
                     return _cachedCookie;
                 }
-                catch { }
+                catch (Exception ex) { LogService.Error("RobloxApiService.GetAnyCookie", ex.Message); }
             }
         }
         return null;
@@ -86,8 +86,9 @@ public static class RobloxApiService
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
+            LogService.Error("RobloxApiService.UpdatePresence", ex.Message);
             _cachedCookie = null;
         }
     }
@@ -107,7 +108,7 @@ public static class RobloxApiService
                 return data[0].GetProperty("name").GetString() ?? "In Game";
             }
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("RobloxApiService.GetGameName", ex.Message); }
         return "In Game";
     }
 

@@ -17,6 +17,8 @@ public class MainViewModel : BaseViewModel
     public ICommand NavigateToSettingsCommand { get; }
     public ICommand NavigateToAccountsCommand { get; }
     public ICommand NavigateToDashboardCommand { get; }
+    public ICommand NavigateToLogsCommand { get; }
+    public ICommand NavigateToBackupCommand { get; }
 
     public MainViewModel()
     {
@@ -24,6 +26,8 @@ public class MainViewModel : BaseViewModel
         NavigateToSettingsCommand = new RelayCommand(_ => NavigateTo<SettingsViewModel>());
         NavigateToAccountsCommand = new RelayCommand(_ => NavigateTo<AccountsViewModel>());
         NavigateToDashboardCommand = new RelayCommand(_ => NavigateTo<DashboardViewModel>());
+        NavigateToLogsCommand = new RelayCommand(_ => NavigateTo<LogsViewModel>());
+        NavigateToBackupCommand = new RelayCommand(_ => NavigateTo<BackupViewModel>());
 
         CurrentView = GetOrCreate<HomeViewModel>();
     }

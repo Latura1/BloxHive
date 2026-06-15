@@ -72,8 +72,8 @@ public static partial class TunnelService
     {
         if (_process is { HasExited: false })
         {
-            try { _process.Kill(entireProcessTree: true); } catch { }
-            try { _process.Close(); } catch { }
+            try { _process.Kill(entireProcessTree: true); } catch (Exception ex) { LogService.Error("TunnelService.Stop", ex.Message); }
+            try { _process.Close(); } catch (Exception ex) { LogService.Error("TunnelService.Stop.Close", ex.Message); }
         }
         _process = null;
         _publicUrl = null;
@@ -89,11 +89,11 @@ public static partial class TunnelService
         var readErr = ReadStream(proc.StandardError, "ERR");
         var timeout = Task.Delay(TimeSpan.FromSeconds(60));
         _ = await Task.WhenAny(readOut, readErr, timeout);
-        if (!_urlFound)
-        {
-            if (!proc.HasExited)
-                StatusChanged?.Invoke("⏱ Zeitüberschreitung (60s) – Tunnel nicht verbunden.\r\nLade cloudflared.exe manuell von\r\nhttps://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe\r\nund speichere es als:\r\n" + _binaryPath);
-            try { proc.Kill(entireProcessTree: true); } catch { }
+            if (!_urlFound)
+            {
+                if (!proc.HasExited)
+                    StatusChanged?.Invoke("⏱ Zeitüberschreitung (60s) – Tunnel nicht verbunden.\r\nLade cloudflared.exe manuell von\r\nhttps://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe\r\nund speichere es als:\r\n" + _binaryPath);
+                try { proc.Kill(entireProcessTree: true); } catch (Exception ex) { LogService.Error("TunnelService.ReadOutput.Kill", ex.Message); }
         }
     }
 
@@ -120,7 +120,7 @@ public static partial class TunnelService
                 StatusChanged?.Invoke($"[{prefix}] {display}");
             }
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("TunnelService.ReadStream", ex.Message); }
     }
 
     private static string GetBinaryPath()
@@ -145,7 +145,7 @@ public static partial class TunnelService
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[TunnelService] Download fehlgeschlagen: {ex.Message}");
+            LogService.Error("TunnelService.Download", ex.Message);
             return false;
         }
     }
@@ -158,7 +158,7 @@ public static partial class TunnelService
             if (File.Exists(zoneId))
                 File.Delete(zoneId);
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("TunnelService.Unblock", ex.Message); }
     }
 
     [GeneratedRegex(@"https://([\w-]+\.)+trycloudflare\.com")]

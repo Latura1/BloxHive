@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Threading;
 using BloxHive.Models;
@@ -280,7 +279,7 @@ public class HomeViewModel : BaseViewModel, IDisposable
 
     internal static void SetProcessWebhook(int pid, bool enabled)
     {
-        if (_instance == null) { Debug.WriteLine("[HomeViewModel] SetProcessWebhook: _instance ist null"); return; }
+        if (_instance == null) { LogService.Warning("HomeViewModel.SetProcessWebhook", "_instance ist null"); return; }
         try
         {
             System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
@@ -289,17 +288,17 @@ public class HomeViewModel : BaseViewModel, IDisposable
                 if (proc != null)
                 {
                     proc.IsWebhookEnabled = enabled;
-                    Debug.WriteLine($"[HomeViewModel] Webhook gesetzt: PID={pid}, Enabled={enabled}");
+                    LogService.Info("HomeViewModel.SetProcessWebhook", $"PID={pid}, Enabled={enabled}");
                 }
                 else
                 {
-                    Debug.WriteLine($"[HomeViewModel] Prozess PID={pid} nicht gefunden");
+                    LogService.Warning("HomeViewModel.SetProcessWebhook", $"Prozess PID={pid} nicht gefunden");
                 }
             });
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[HomeViewModel] Dispatcher FEHLER: {ex.Message}");
+            LogService.Error("HomeViewModel.SetProcessWebhook", ex.Message);
         }
     }
 

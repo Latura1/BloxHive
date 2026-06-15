@@ -24,7 +24,7 @@ public static class SettingsService
                 return JsonSerializer.Deserialize<AppSettings>(json) ?? new AppSettings();
             }
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("SettingsService.Load", ex.Message); }
 
         return new AppSettings();
     }
@@ -39,6 +39,6 @@ public static class SettingsService
             File.WriteAllText(_filePath, json);
             Saved?.Invoke();
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("SettingsService.Save", ex.Message); }
     }
 }

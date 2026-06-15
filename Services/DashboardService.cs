@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
@@ -82,8 +81,8 @@ public static partial class DashboardService
     {
         _ = TunnelService.StopAsync();
         _cts?.Cancel();
-        try { _listener?.Stop(); } catch { }
-        try { _listener?.Close(); } catch { }
+        try { _listener?.Stop(); } catch (Exception ex) { LogService.Error("DashboardService.Stop", ex.Message); }
+        try { _listener?.Close(); } catch (Exception ex) { LogService.Error("DashboardService.Stop.Close", ex.Message); }
         _listener = null;
         _authToken = "";
         RunningChanged?.Invoke(false);
@@ -100,7 +99,7 @@ public static partial class DashboardService
             }
             catch (OperationCanceledException) { break; }
             catch (HttpListenerException) { break; }
-            catch { }
+            catch (Exception ex) { LogService.Error("DashboardService.Run", ex.Message); }
         }
     }
 
@@ -145,7 +144,7 @@ public static partial class DashboardService
                 ctx.Response.Close();
             }
         }
-        catch { ctx.Response.StatusCode = 500; ctx.Response.Close(); }
+        catch (Exception ex) { LogService.Error("DashboardService.HandleRequest", ex.Message); ctx.Response.StatusCode = 500; ctx.Response.Close(); }
     }
 
     private static bool CheckAuth(HttpListenerRequest req)
@@ -217,7 +216,7 @@ public static partial class DashboardService
                 }
             });
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("DashboardService.GetStatus.Theme", ex.Message); }
 
         var accountsData = accounts.Select(a => new
         {
@@ -315,13 +314,13 @@ public static partial class DashboardService
             using var doc = JsonDocument.Parse(body);
             var pid = doc.RootElement.GetProperty("pid").GetInt32();
             var enabled = doc.RootElement.GetProperty("enabled").GetBoolean();
-            Debug.WriteLine($"[DashboardService] Webhook: PID={pid}, Enabled={enabled}");
+            LogService.Info("DashboardService.Webhook", $"PID={pid}, Enabled={enabled}");
             HomeViewModel.SetProcessWebhook(pid, enabled);
             await RespondJson(res, new { success = true });
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[DashboardService] Webhook FEHLER: {ex.Message}");
+            LogService.Error("DashboardService.ProcessWebhook", ex.Message);
             ctx.Response.StatusCode = 500;
             await RespondJson(ctx.Response, new { success = false, error = ex.Message });
         }

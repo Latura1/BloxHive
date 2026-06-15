@@ -43,7 +43,7 @@ public static class AccountService
                 return JsonSerializer.Deserialize<List<AccountInfo>>(json) ?? [];
             }
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("AccountService.Load", ex.Message); }
         return [];
     }
 
@@ -55,7 +55,7 @@ public static class AccountService
             var json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_filePath, json);
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("AccountService.Save", ex.Message); }
     }
 
     public static string GetWebView2UserDataFolder()
@@ -80,6 +80,6 @@ public static class AccountService
             if (Directory.Exists(webViewDir))
                 Directory.Delete(webViewDir, true);
         }
-        catch { }
+        catch (Exception ex) { LogService.Error("AccountService.ClearCache", ex.Message); }
     }
 }

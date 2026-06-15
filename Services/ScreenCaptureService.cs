@@ -79,8 +79,9 @@ public static class ScreenCaptureService
             bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
             return path;
         }
-        catch
+        catch (Exception ex)
         {
+            LogService.Error("ScreenCaptureService.CaptureWindow", ex.Message);
             return null;
         }
     }

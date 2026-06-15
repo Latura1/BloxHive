@@ -1,0 +1,61 @@
+<UserControl x:Class="BloxHive.Views.BackupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:BloxHive.ViewModels"
+             d:DataContext="{d:DesignInstance vm:BackupViewModel}"
+             mc:Ignorable="d">
+    <ScrollViewer Padding="40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel MaxWidth="640">
+            <TextBlock Text="{Binding Loc.BackupTitle}" Style="{StaticResource PageTitle}" />
+            <TextBlock Text="{Binding Loc.BackupDescription}" Style="{StaticResource PageSubtitle}" />
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                        <TextBlock Text="&#xE718;" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center" Margin="0 0 16 0" />
+                        <StackPanel>
+                            <TextBlock Text="{Binding Loc.BackupExport}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                            <TextBlock Text="{Binding Loc.BackupExportInfo}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 0" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Command="{Binding ExportCommand}" IsEnabled="{Binding CanExport}"
+                            Height="36" Padding="16 0" Background="{DynamicResource BrushAccent}" Foreground="White"
+                            BorderThickness="0" Cursor="Hand" FontSize="13" FontWeight="SemiBold"
+                            HorizontalAlignment="Left" Margin="0 16 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0 0 8 0" />
+                            <TextBlock Text="{Binding Loc.BackupExportButton}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                        <TextBlock Text="&#xE718;" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center" Margin="0 0 16 0" />
+                        <StackPanel>
+                            <TextBlock Text="{Binding Loc.BackupImport}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                            <TextBlock Text="{Binding Loc.BackupImportInfo}" FontSize="12" Foreground="{DynamicResource BrushTextSecondary}" Margin="0 4 0 0" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Command="{Binding ImportCommand}" IsEnabled="{Binding CanImport}"
+                            Height="36" Padding="16 0" Background="{DynamicResource BrushAccent}" Foreground="White"
+                            BorderThickness="0" Cursor="Hand" FontSize="13" FontWeight="SemiBold"
+                            HorizontalAlignment="Left" Margin="0 16 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0 0 8 0" />
+                            <TextBlock Text="{Binding Loc.BackupImportButton}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#20EF4444" CornerRadius="12" Padding="16" Visibility="{Binding StatusMessage, Converter={StaticResource StringToVisibility}}">
+                <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="{DynamicResource BrushDanger}" TextWrapping="Wrap" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
