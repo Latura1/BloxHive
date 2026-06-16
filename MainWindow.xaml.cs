@@ -14,6 +14,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Icon = IconGenerator.GenerateBIcon().ToImageSource();
         _vm = new MainViewModel();
         DataContext = _vm;
 
@@ -67,5 +68,9 @@ public partial class MainWindow : Window
             : WindowState.Maximized;
     }
 
-    private void MinimizeClick(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    private void MinimizeClick(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState.Minimized;
+        Hide();
+    }
 }

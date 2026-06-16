@@ -80,6 +80,7 @@ public class AccountsViewModel : BaseViewModel
             Accounts.Add(account);
         RefreshCounts();
         _ = RefreshStatus();
+        TrayService.RefreshAccounts();
     }
 
     private async Task RefreshStatus()
@@ -108,6 +109,7 @@ public class AccountsViewModel : BaseViewModel
             }
             Accounts.Add(window.Result);
             AccountService.Save([.. Accounts]);
+            TrayService.RefreshAccounts();
             RefreshCounts();
             StatusMessage = string.Format(Loc.AccountAdded, window.Result.DisplayName);
         }
@@ -131,6 +133,7 @@ public class AccountsViewModel : BaseViewModel
         {
             Accounts.Remove(account);
             AccountService.Save([.. Accounts]);
+            TrayService.RefreshAccounts();
             RefreshCounts();
             StatusMessage = string.Format(Loc.AccountDeleted, account.DisplayName);
         }
@@ -139,6 +142,7 @@ public class AccountsViewModel : BaseViewModel
     private void SaveProxy(AccountInfo account)
     {
         AccountService.Save([.. Accounts]);
+        TrayService.RefreshAccounts();
         StatusMessage = string.Format(Loc.ProxySaved, account.DisplayName);
     }
 }

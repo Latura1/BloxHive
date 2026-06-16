@@ -12,9 +12,9 @@ public class LogLevelToBrushConverter : IValueConverter
         return value is LogLevel level
             ? level switch
             {
-                LogLevel.Warning => new SolidColorBrush(Color.FromRgb(245, 158, 11)),
-                LogLevel.Error => new SolidColorBrush(Color.FromRgb(239, 68, 68)),
-                _ => new SolidColorBrush(Color.FromRgb(34, 197, 94))
+                LogLevel.Warning => new SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 158, 11)),
+                LogLevel.Error => new SolidColorBrush(System.Windows.Media.Color.FromRgb(239, 68, 68)),
+                _ => new SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 197, 94))
             }
             : new SolidColorBrush(Colors.Gray);
     }

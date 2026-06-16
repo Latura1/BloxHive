@@ -99,6 +99,38 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Loc.Startup}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                            <TextBlock Text="{Binding Loc.StartupDescription}" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 0" />
+                        </StackPanel>
+                        <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding StartWithWindows, Mode=TwoWay}" VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Loc.StartMinimized}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
+                            <TextBlock Text="{Binding Loc.StartMinimizedDescription}" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 0" />
+                        </StackPanel>
+                        <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding StartMinimized, Mode=TwoWay}" VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0 0 0 16">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="{Binding Loc.Experimental}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" />
                             <TextBlock Text="{Binding Loc.ExperimentalDescription}" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" Margin="0 4 0 0" />
                         </StackPanel>

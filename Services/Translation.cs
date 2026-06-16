@@ -161,6 +161,10 @@ public class Translation : INotifyPropertyChanged
         ["AuthSessionExpired"] = "Sitzung abgelaufen – bitte neu anmelden.",
         ["AuthLogout"] = "Abmelden",
         ["AuthLogoutConfirm"] = "Wirklich abmelden?",
+        ["Startup"] = "Autostart",
+        ["StartupDescription"] = "BloxHive automatisch beim Windows-Start ausführen.",
+        ["StartMinimized"] = "Minimiert starten",
+        ["StartMinimizedDescription"] = "BloxHive direkt in die Taskleiste minimiert starten.",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -319,6 +323,10 @@ public class Translation : INotifyPropertyChanged
         ["AuthSessionExpired"] = "Session expired – please log in again.",
         ["AuthLogout"] = "Logout",
         ["AuthLogoutConfirm"] = "Really log out?",
+        ["Startup"] = "Start with Windows",
+        ["StartupDescription"] = "Automatically start BloxHive when Windows starts.",
+        ["StartMinimized"] = "Start minimized",
+        ["StartMinimizedDescription"] = "Start BloxHive minimized to the system tray.",
     };
 
     private static Translation? _instance;
@@ -508,6 +516,10 @@ public class Translation : INotifyPropertyChanged
     public string AuthSessionExpired => Get("AuthSessionExpired");
     public string AuthLogout => Get("AuthLogout");
     public string AuthLogoutConfirm => Get("AuthLogoutConfirm");
+    public string Startup => Get("Startup");
+    public string StartupDescription => Get("StartupDescription");
+    public string StartMinimized => Get("StartMinimized");
+    public string StartMinimizedDescription => Get("StartMinimizedDescription");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

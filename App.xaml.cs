@@ -42,7 +42,12 @@ public partial class App : Application
                 DashboardService.Start(settings.DashboardPort, settings.DashboardPasswordHash);
 
             var mainWindow = new MainWindow();
-            mainWindow.Show();
+            TrayService.Initialize(mainWindow);
+
+            if (settings.StartMinimized)
+                mainWindow.WindowState = WindowState.Minimized;
+            else
+                mainWindow.Show();
         }
         catch (Exception ex)
         {

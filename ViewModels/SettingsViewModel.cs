@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using BloxHive.Models;
 using BloxHive.Services;
+using Microsoft.Win32;
 
 namespace BloxHive.ViewModels;
 
@@ -59,6 +60,47 @@ public class SettingsViewModel : BaseViewModel
             SettingsService.Save(settings);
             OnPropertyChanged();
         }
+    }
+
+    public bool StartWithWindows
+    {
+        get => SettingsService.Load().StartWithWindows;
+        set
+        {
+            var settings = SettingsService.Load();
+            if (settings.StartWithWindows == value) return;
+            settings.StartWithWindows = value;
+            SettingsService.Save(settings);
+            UpdateStartupRegistry(value);
+            OnPropertyChanged();
+        }
+    }
+
+    public bool StartMinimized
+    {
+        get => SettingsService.Load().StartMinimized;
+        set
+        {
+            var settings = SettingsService.Load();
+            if (settings.StartMinimized == value) return;
+            settings.StartMinimized = value;
+            SettingsService.Save(settings);
+            OnPropertyChanged();
+        }
+    }
+
+    private static void UpdateStartupRegistry(bool enable)
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            if (key == null) return;
+            if (enable)
+                key.SetValue("BloxHive", $"\"{Environment.ProcessPath}\"");
+            else
+                key.DeleteValue("BloxHive", false);
+        }
+        catch { }
     }
 
     public bool ExperimentalFeatures

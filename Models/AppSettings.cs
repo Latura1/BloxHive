@@ -14,4 +14,6 @@ public class AppSettings
     public string? AuthToken { get; set; }
     public string? AuthUsername { get; set; }
     public string ServerUrl { get; set; } = "https://bloxhive-api.your-server.com";
+    public bool StartWithWindows { get; set; }
+    public bool StartMinimized { get; set; }
 }
