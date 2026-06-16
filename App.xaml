@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:BloxHive.ViewModels"
              xmlns:views="clr-namespace:BloxHive.Views"
-             xmlns:conv="clr-namespace:BloxHive.Converters"
-             StartupUri="MainWindow.xaml">
+             xmlns:conv="clr-namespace:BloxHive.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,6 +14,7 @@
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibility" />
             <conv:StringToVisibilityConverter x:Key="StringToVisibility" />
             <conv:LogLevelToBrushConverter x:Key="LogLevelToBrush" />
+            <conv:BoolToFontWeightConverter x:Key="BoolToFontWeight" />
 
             <DataTemplate DataType="{x:Type vm:HomeViewModel}">
                 <views:HomeView />

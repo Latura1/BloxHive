@@ -11,4 +11,7 @@ public class AppSettings
     public int DashboardPort { get; set; } = 5000;
     public string DashboardPasswordHash { get; set; } = "";
     public bool DashboardAutoStart { get; set; }
+    public string? AuthToken { get; set; }
+    public string? AuthUsername { get; set; }
+    public string ServerUrl { get; set; } = "https://bloxhive-api.your-server.com";
 }

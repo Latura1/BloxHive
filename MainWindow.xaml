@@ -72,6 +72,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Margin="0 16 0 0">
@@ -114,6 +115,55 @@
                                 </StackPanel>
                             </Button>
                         </StackPanel>
+
+                        <!-- Profile Bar (bottom) -->
+                        <Border Grid.Row="2" Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="0 0 0 16" Padding="0" Height="Auto">
+                            <StackPanel>
+                                <Button Background="Transparent" BorderThickness="0" Cursor="Hand" Command="{Binding ToggleProfileCommand}" Height="44" Padding="8 0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="28" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Width="24" Height="24" CornerRadius="12" Background="{DynamicResource BrushAccent}">
+                                            <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" FontSize="11" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="{Binding SessionUsername}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" Margin="8 0 0 0" />
+                                        <TextBlock Grid.Column="2" Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="10" Foreground="{DynamicResource BrushTextMuted}" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+
+                                <!-- Profile Panel (toggle) -->
+                                <Border x:Name="ProfilePanel" Background="{DynamicResource BrushSurfaceDarkSecondary}" Padding="12 8" Visibility="Collapsed">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding SessionUsername}" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 0 0 4" />
+                                        <TextBlock Text="{Binding Loc.AuthLoginTab}" FontSize="11" Foreground="{DynamicResource BrushTextMuted}" Margin="0 0 0 8" />
+
+                                        <Grid Margin="0 0 0 6">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Account Age" FontSize="10" Foreground="{DynamicResource BrushTextMuted}" />
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SessionAge}" FontSize="10" Foreground="{DynamicResource BrushTextPrimary}" HorizontalAlignment="Right" />
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Remaining" FontSize="10" Foreground="{DynamicResource BrushTextMuted}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SessionExpiry}" FontSize="10" Foreground="{DynamicResource BrushTextPrimary}" HorizontalAlignment="Right" />
+                                        </Grid>
+
+                                        <Button Content="Logout" Command="{Binding LogoutCommand}"
+                                                Height="32" Margin="0 4 0 0"
+                                                Background="{DynamicResource BrushDanger}"
+                                                Foreground="White" BorderThickness="0" Cursor="Hand"
+                                                FontSize="12" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
                     </Grid>
                 </Border>
 

@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bloxhive
+      POSTGRES_USER: bloxhive
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bloxhive"]
+      interval: 5s
+      timeout: 3s
+    networks:
+      - caddy_caddy_proxy
+
+  api:
+    build: ./BloxHive.API
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=bloxhive;Username=bloxhive;Password=${DB_PASSWORD:-changeme}"
+      Jwt__Secret: ${JWT_SECRET:?JWT_SECRET required}
+      Jwt__Issuer: bloxhive-api
+      Admin__Password: ${ADMIN_PASSWORD:?ADMIN_PASSWORD required}
+    expose:
+      - "5000"
+    networks:
+      - caddy_caddy_proxy
+
+  dashboard:
+    build:
+      context: ./BloxHive.Dashboard
+      args:
+        NEXT_PUBLIC_API_URL: https://${API_DOMAIN:?API_DOMAIN required}/api
+    restart: unless-stopped
+    depends_on:
+      - api
+    expose:
+      - "3000"
+    networks:
+      - caddy_caddy_proxy
+
+networks:
+  caddy_caddy_proxy:
+    external: true
+
+volumes:
+  pgdata:

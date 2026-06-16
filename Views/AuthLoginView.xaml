@@ -1,0 +1,119 @@
+<Window x:Class="BloxHive.Views.AuthLoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BloxHive Login" Width="420" Height="520"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        Topmost="True">
+    <Border CornerRadius="8" Background="{DynamicResource BrushSurfaceDark}" BorderThickness="0" Padding="24 16">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding Loc.AuthLoginTitle}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource BrushTextPrimary}" HorizontalAlignment="Center" Margin="0 0 0 16" />
+
+            <Border Grid.Row="1" Padding="0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <TextBlock Text="{Binding Loc.AuthLoginDescription}" FontSize="13" Foreground="{DynamicResource BrushTextSecondary}" TextWrapping="Wrap" Margin="0 0 0 20" />
+
+                        <Grid Margin="0 0 0 16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="6 0 0 6" Padding="0" Height="36">
+                                <Button Content="{Binding Loc.AuthLoginTab}"
+                                        Background="Transparent"
+                                        Foreground="{DynamicResource BrushTextPrimary}"
+                                        BorderThickness="0" Cursor="Hand"
+                                        Command="{Binding SwitchToLoginCommand}"
+                                        FontWeight="{Binding IsLoginMode, Converter={StaticResource BoolToFontWeight}}" />
+                            </Border>
+                            <Border Grid.Column="1" Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="0 6 6 0" Padding="0" Height="36">
+                                <Button Content="{Binding Loc.AuthRegisterTab}"
+                                        Background="Transparent"
+                                        Foreground="{DynamicResource BrushTextPrimary}"
+                                        BorderThickness="0" Cursor="Hand"
+                                        Command="{Binding SwitchToRegisterCommand}"
+                                        FontWeight="{Binding IsRegisterMode, Converter={StaticResource BoolToFontWeight}}" />
+                            </Border>
+                        </Grid>
+
+                        <StackPanel Visibility="{Binding IsRegisterMode, Converter={StaticResource BoolToVisibility}}">
+                            <TextBlock Text="{Binding Loc.AuthLicenseKey}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 0 0 4" />
+                            <TextBox Text="{Binding LicenseKey, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="13" Height="36" Padding="10 0"
+                                     Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                     Foreground="{DynamicResource BrushTextPrimary}"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center" />
+                            <TextBlock Text="{Binding Loc.AuthUsername}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 12 0 4" />
+                            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="13" Height="36" Padding="10 0"
+                                     Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                     Foreground="{DynamicResource BrushTextPrimary}"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center" />
+                            <TextBlock Text="{Binding Loc.AuthPassword}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 12 0 4" />
+                            <PasswordBox x:Name="RegisterPasswordBox"
+                                          FontSize="13" Height="36" Padding="10 0"
+                                          Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                          Foreground="{DynamicResource BrushTextPrimary}"
+                                          BorderThickness="0"
+                                          VerticalContentAlignment="Center"
+                                          PasswordChanged="RegisterPasswordChanged" />
+                            <TextBlock Text="{Binding Loc.AuthConfirmPassword}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 12 0 4" />
+                            <PasswordBox x:Name="RegisterConfirmPasswordBox"
+                                          FontSize="13" Height="36" Padding="10 0"
+                                          Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                          Foreground="{DynamicResource BrushTextPrimary}"
+                                          BorderThickness="0"
+                                          VerticalContentAlignment="Center"
+                                          PasswordChanged="RegisterConfirmPasswordChanged" />
+                            <Button Content="{Binding Loc.AuthRegisterButton}"
+                                    Height="40" Margin="0 16 0 0"
+                                    Background="{DynamicResource BrushAccent}"
+                                    Foreground="White" BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding SubmitCommand}" />
+                        </StackPanel>
+
+                        <StackPanel Visibility="{Binding IsLoginMode, Converter={StaticResource BoolToVisibility}}">
+                            <TextBlock Text="{Binding Loc.AuthUsername}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 0 0 4" />
+                            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="13" Height="36" Padding="10 0"
+                                     Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                     Foreground="{DynamicResource BrushTextPrimary}"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center" />
+                            <TextBlock Text="{Binding Loc.AuthPassword}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource BrushTextPrimary}" Margin="0 12 0 4" />
+                            <PasswordBox x:Name="LoginPasswordBox"
+                                          FontSize="13" Height="36" Padding="10 0"
+                                          Background="{DynamicResource BrushSurfaceDarkTertiary}"
+                                          Foreground="{DynamicResource BrushTextPrimary}"
+                                          BorderThickness="0"
+                                          VerticalContentAlignment="Center"
+                                          PasswordChanged="LoginPasswordChanged" />
+                            <Button Content="{Binding Loc.AuthLoginButton}"
+                                    Height="40" Margin="0 16 0 0"
+                                    Background="{DynamicResource BrushAccent}"
+                                    Foreground="White" BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding SubmitCommand}" />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   FontSize="12" Foreground="{DynamicResource BrushAccent}"
+                                   TextWrapping="Wrap" Margin="0 12 0 0"
+                                   Visibility="{Binding StatusMessage, Converter={StaticResource StringToVisibility}}" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

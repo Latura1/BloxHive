@@ -1,0 +1,7 @@
+databloxhive.l4tura.de {
+    reverse_proxy api:5000
+}
+
+bloxhivedashboard.l4tura.de {
+    reverse_proxy dashboard:3000
+}

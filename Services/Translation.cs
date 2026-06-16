@@ -133,6 +133,34 @@ public class Translation : INotifyPropertyChanged
         ["BackupPreviewFormat"] = "{0} Account(s), Sprache: {1}, Design: {2}",
         ["BackupImportConfirm"] = "Backup wirklich importieren?",
         ["BackupError"] = "❌ Fehler",
+        ["AuthLoginTitle"] = "BloxHive Login",
+        ["AuthLoginDescription"] = "Melde dich an oder registriere einen neuen Account.",
+        ["AuthLicenseKey"] = "Lizenz-Key",
+        ["AuthLicenseKeyPlaceholder"] = "BLOX-XXXX-XXXX-XXXX-XXXX",
+        ["AuthUsername"] = "Benutzername",
+        ["AuthPassword"] = "Passwort",
+        ["AuthConfirmPassword"] = "Passwort bestätigen",
+        ["AuthLoginTab"] = "Anmelden",
+        ["AuthRegisterTab"] = "Registrieren",
+        ["AuthLoginButton"] = "Anmelden",
+        ["AuthRegisterButton"] = "Registrieren",
+        ["AuthLoggingIn"] = "Melde an...",
+        ["AuthRegistering"] = "Registriere...",
+        ["AuthLoginSuccess"] = "✅ Erfolgreich angemeldet!",
+        ["AuthRegisterSuccess"] = "✅ Account erstellt! Du kannst dich jetzt anmelden.",
+        ["AuthErrorInvalidKey"] = "❌ Ungültiger Lizenz-Key.",
+        ["AuthErrorUsernameTaken"] = "❌ Benutzername bereits vergeben.",
+        ["AuthErrorUsernameLength"] = "❌ Benutzername muss 3-50 Zeichen lang sein.",
+        ["AuthErrorPasswordLength"] = "❌ Passwort muss mindestens 6 Zeichen lang sein.",
+        ["AuthErrorPasswordsDontMatch"] = "❌ Passwörter stimmen nicht überein.",
+        ["AuthErrorInvalidCredentials"] = "❌ Falscher Benutzername oder Passwort.",
+        ["AuthErrorServer"] = "❌ Server nicht erreichbar.",
+        ["AuthErrorExpired"] = "❌ Account ist abgelaufen.",
+        ["AuthErrorHwidBound"] = "❌ HWID gebunden an anderen Rechner.",
+        ["AuthErrorDeactivated"] = "❌ Account wurde deaktiviert.",
+        ["AuthSessionExpired"] = "Sitzung abgelaufen – bitte neu anmelden.",
+        ["AuthLogout"] = "Abmelden",
+        ["AuthLogoutConfirm"] = "Wirklich abmelden?",
     };
 
     private static readonly Dictionary<string, string> _en = new()
@@ -263,6 +291,34 @@ public class Translation : INotifyPropertyChanged
         ["BackupPreviewFormat"] = "{0} account(s), Language: {1}, Theme: {2}",
         ["BackupImportConfirm"] = "Really import this backup?",
         ["BackupError"] = "❌ Error",
+        ["AuthLoginTitle"] = "BloxHive Login",
+        ["AuthLoginDescription"] = "Login or register a new account.",
+        ["AuthLicenseKey"] = "License Key",
+        ["AuthLicenseKeyPlaceholder"] = "BLOX-XXXX-XXXX-XXXX-XXXX",
+        ["AuthUsername"] = "Username",
+        ["AuthPassword"] = "Password",
+        ["AuthConfirmPassword"] = "Confirm Password",
+        ["AuthLoginTab"] = "Login",
+        ["AuthRegisterTab"] = "Register",
+        ["AuthLoginButton"] = "Sign In",
+        ["AuthRegisterButton"] = "Register",
+        ["AuthLoggingIn"] = "Signing in...",
+        ["AuthRegistering"] = "Registering...",
+        ["AuthLoginSuccess"] = "✅ Signed in successfully!",
+        ["AuthRegisterSuccess"] = "✅ Account created! You can now log in.",
+        ["AuthErrorInvalidKey"] = "❌ Invalid license key.",
+        ["AuthErrorUsernameTaken"] = "❌ Username already taken.",
+        ["AuthErrorUsernameLength"] = "❌ Username must be 3-50 characters.",
+        ["AuthErrorPasswordLength"] = "❌ Password must be at least 6 characters.",
+        ["AuthErrorPasswordsDontMatch"] = "❌ Passwords do not match.",
+        ["AuthErrorInvalidCredentials"] = "❌ Invalid username or password.",
+        ["AuthErrorServer"] = "❌ Server unreachable.",
+        ["AuthErrorExpired"] = "❌ Account has expired.",
+        ["AuthErrorHwidBound"] = "❌ HWID bound to another machine.",
+        ["AuthErrorDeactivated"] = "❌ Account has been deactivated.",
+        ["AuthSessionExpired"] = "Session expired – please log in again.",
+        ["AuthLogout"] = "Logout",
+        ["AuthLogoutConfirm"] = "Really log out?",
     };
 
     private static Translation? _instance;
@@ -424,6 +480,34 @@ public class Translation : INotifyPropertyChanged
     public string BackupPreviewFormat => Get("BackupPreviewFormat");
     public string BackupImportConfirm => Get("BackupImportConfirm");
     public string BackupError => Get("BackupError");
+    public string AuthLoginTitle => Get("AuthLoginTitle");
+    public string AuthLoginDescription => Get("AuthLoginDescription");
+    public string AuthLicenseKey => Get("AuthLicenseKey");
+    public string AuthLicenseKeyPlaceholder => Get("AuthLicenseKeyPlaceholder");
+    public string AuthUsername => Get("AuthUsername");
+    public string AuthPassword => Get("AuthPassword");
+    public string AuthConfirmPassword => Get("AuthConfirmPassword");
+    public string AuthLoginTab => Get("AuthLoginTab");
+    public string AuthRegisterTab => Get("AuthRegisterTab");
+    public string AuthLoginButton => Get("AuthLoginButton");
+    public string AuthRegisterButton => Get("AuthRegisterButton");
+    public string AuthLoggingIn => Get("AuthLoggingIn");
+    public string AuthRegistering => Get("AuthRegistering");
+    public string AuthLoginSuccess => Get("AuthLoginSuccess");
+    public string AuthRegisterSuccess => Get("AuthRegisterSuccess");
+    public string AuthErrorInvalidKey => Get("AuthErrorInvalidKey");
+    public string AuthErrorUsernameTaken => Get("AuthErrorUsernameTaken");
+    public string AuthErrorUsernameLength => Get("AuthErrorUsernameLength");
+    public string AuthErrorPasswordLength => Get("AuthErrorPasswordLength");
+    public string AuthErrorPasswordsDontMatch => Get("AuthErrorPasswordsDontMatch");
+    public string AuthErrorInvalidCredentials => Get("AuthErrorInvalidCredentials");
+    public string AuthErrorServer => Get("AuthErrorServer");
+    public string AuthErrorExpired => Get("AuthErrorExpired");
+    public string AuthErrorHwidBound => Get("AuthErrorHwidBound");
+    public string AuthErrorDeactivated => Get("AuthErrorDeactivated");
+    public string AuthSessionExpired => Get("AuthSessionExpired");
+    public string AuthLogout => Get("AuthLogout");
+    public string AuthLogoutConfirm => Get("AuthLogoutConfirm");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
