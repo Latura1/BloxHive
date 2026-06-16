@@ -66,7 +66,7 @@ public static class RobloxApiService
                 var account = accounts.FirstOrDefault(a => a.UserId == userId);
                 if (account == null) continue;
 
-                var universeId = p.TryGetProperty("universeId", out var uidEl) ? uidEl.GetInt64() : 0;
+                var universeId = p.TryGetProperty("universeId", out var uidEl) && uidEl.ValueKind == JsonValueKind.Number ? uidEl.GetInt64() : 0;
 
                 if (uid == 2 && universeId > 0)
                 {

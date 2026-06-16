@@ -170,14 +170,7 @@
                     </Border>
 
                     <Border Background="{DynamicResource BrushSurfaceDarkTertiary}" CornerRadius="10" Padding="14" HorizontalAlignment="Center" Margin="0 16 0 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding TunnelUrl}" FontSize="14" Foreground="{DynamicResource BrushTextPrimary}" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap" />
-                            <Button Command="{Binding CopyLinkCommand}" Width="30" Height="30" Padding="0" Margin="8 0 0 0"
-                                    Background="Transparent" Foreground="{DynamicResource BrushTextSecondary}"
-                                    BorderThickness="0" Cursor="Hand" VerticalAlignment="Center">
-                                <TextBlock Text="&#xE8C8;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </Button>
-                        </StackPanel>
+                        <TextBlock Text="{Binding TunnelUrl}" FontSize="14" Foreground="{DynamicResource BrushTextPrimary}" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap" />
                     </Border>
 
                     <TextBlock Text="{Binding NetworkUrl}" FontSize="11" Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" Margin="0 6 0 0"
